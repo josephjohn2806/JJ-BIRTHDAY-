@@ -1,29 +1,241 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Musembi Earthways Safaris</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistantly - Join the Unicorn Movement</title>
+    <style>
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #fcfbfa;
+            color: #2d2d2d;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4338ca;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-start {
+            border: 1px solid #ddd;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background: white;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-start:hover {
+            background: #f3f4f6;
+        }
+
+        .menu-toggle {
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        /* Fullscreen Menu Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #6366f1, #a855f7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            transform: translateY(-100%);
+            transition: transform 0.5s ease-in-out;
+            z-index: 99;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-overlay a {
+            color: white;
+            text-decoration: none;
+            font-size: 32px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .menu-overlay a:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 32px;
+            color: white;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 800px;
+            margin: 60px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #1f2937;
+            margin-bottom: 24px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        /* Interactive Apply Button */
+        .btn-apply {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #4f46e5;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn-apply:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.6);
+        }
+
+        /* Features Section */
+        .features {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f3f4f6;
+        }
+
+        .card h3 {
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+
+        .card p {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
-  <!-- Homepage Hero -->
-  <section id="home" class="hero">
-    <div id="threejs-container"></div>
-    <div class="hero-text">
-      <h1>Where the Wing Lands and Adventure Rolls</h1>
-      <button onclick="scrollToAbout()">Start Your Adventure</button>
+
+    <nav>
+        <div class="logo">u assistantly</div>
+        <div class="nav-right">
+            <button class="btn-start">Start Hiring</button>
+            <button class="menu-toggle" id="openBtn">☰</button>
+        </div>
+    </nav>
+
+    <div class="menu-overlay" id="menuOverlay">
+        <button class="close-menu" id="closeBtn">✕</button>
+        <a href="#">Unicorns</a>
+        <a href="#">Process</a>
+        <a href="#">Pricing</a>
+        <a href="#">About</a>
     </div>
-  </section>
 
-  <!-- About Us -->
-  <section id="about">
-    <h2>About Musembi Earthways Safaris</h2>
-    <p>We specialize in individual, family, volunteer and group transport, travel logistics and unforgettable safari excursions across Kenya with a modern, well-maintained fleet.</p>
-  </section>
+    <section class="hero">
+        <h1>Join the Unicorn Movement</h1>
+        <p>We're building the future of global work — one Unicorn at a time. If you're driven, proactive, and passionate about making real impact for clients, Assistantly is where you'll thrive, grow, and be seen.</p>
+        
+        <form action="http://127.0.0.1:5000/apply" method="POST">
+            <button type="submit" class="btn-apply">
+                <span>→</span> Apply Now
+            </button>
+        </form>
+    </section>
 
-  <!-- Three.js -->
-  <script src="https://cdn.jsdelivr.net/npm/three@0.152.2/build/three.min.js"></script>
-  <script src="script.js"></script>
+    <section class="features">
+        <div class="card">
+            <h3>People First</h3>
+            <p>Fair pay, real benefits, and a workplace where you're valued for your mind, not just your output.</p>
+        </div>
+        <div class="card">
+            <h3>Growth & Mentorship</h3>
+            <p>From Success Pods to performance coaching, you'll always have support, guidance, and career direction.</p>
+        </div>
+    </section>
+
+    <script>
+        const menuOverlay = document.getElementById('menuOverlay');
+        const openBtn = document.getElementById('openBtn');
+        const closeBtn = document.getElementById('closeBtn');
+
+        openBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+    </script>
 </body>
 </html>
+
