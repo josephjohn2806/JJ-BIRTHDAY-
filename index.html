@@ -4,315 +4,396 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Musembi Earthways Safaris</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Base Styling */
+        /* Global Setup matching the original UI structure */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: #fcfaf7;
-            color: #2b2621;
+            background-color: #fcfbfa;
+            color: #1f2937;
             overflow-x: hidden;
-            perspective: 1000px; /* Enables 3D space for animations */
         }
 
-        /* Glassmorphic Navigation */
+        /* Navigation Bar */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
-            background: rgba(252, 250, 247, 0.75);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 24px 20px;
+            background: rgba(252, 251, 250, 0.9);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 800;
-            color: #1b4332;
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
             letter-spacing: -0.5px;
         }
 
         .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 16px;
         }
 
-        .btn-book {
-            border: 1px solid #1b4332;
-            padding: 10px 24px;
-            border-radius: 25px;
-            background: transparent;
-            color: #1b4332;
-            cursor: pointer;
+        .btn-start-hiring {
+            background: white;
+            color: #1f2937;
+            border: 1px solid #e5e7eb;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
             font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .btn-book:hover {
-            background: #1b4332;
-            color: white;
-        }
-
-        .menu-toggle {
-            font-size: 26px;
             cursor: pointer;
-            background: none;
-            border: none;
-            color: #1b4332;
+            transition: background 0.2s ease;
         }
 
-        /* 3D Slanted Overlay Menu */
+        .btn-start-hiring:hover {
+            background: #f9fafb;
+        }
+
+        /* Custom Hamburger Button matching video style */
+        .hamburger-btn {
+            background: #f3f4f6;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: #1f2937;
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Fullscreen Navigation Sheet overlaying from top */
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1b4332, #40916c);
+            height: 100vh;
+            background: #4f46e5; /* Using original bright violet/blue palette background */
+            z-index: 200;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-            transform: translateY(-100%) rotateX(-15deg);
-            transform-origin: top center;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 99;
-            opacity: 0;
+            justify-content: space-between;
+            padding: 40px 24px 60px 24px;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
         }
 
         .menu-overlay.active {
-            transform: translateY(0) rotateX(0deg);
-            opacity: 1;
+            transform: translateY(0);
         }
 
-        .menu-overlay a {
-            color: #fefae0;
-            text-decoration: none;
-            font-size: 36px;
-            font-weight: 700;
-            transition: transform 0.3s ease;
-        }
-
-        .menu-overlay a:hover {
-            transform: scale(1.1) translateZ(20px);
-        }
-
-        .close-menu {
-            position: absolute;
-            top: 20px;
-            right: 40px;
-            font-size: 32px;
-            color: #fefae0;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            max-width: 850px;
-            margin: 60px auto;
-            text-align: center;
-            padding: 0 20px;
-        }
-
-        h1 {
-            font-size: 52px;
-            color: #1b4332;
-            margin-bottom: 24px;
-            font-weight: 800;
-            line-height: 1.1;
-        }
-
-        .hero p {
-            font-size: 19px;
-            color: #524c46;
-            line-height: 1.6;
-            margin-bottom: 40px;
-        }
-
-        /* Animated CTA Button */
-        .btn-adventure {
-            display: inline-flex;
+        .menu-header {
+            display: flex;
+            justify-content: flex-end;
             align-items: center;
-            gap: 12px;
-            background: #d8f3dc;
-            color: #1b4332;
-            padding: 18px 44px;
-            border-radius: 40px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            border: 2px solid #1b4332;
-            cursor: pointer;
-            box-shadow: 0 8px 20px rgba(27, 67, 50, 0.15);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .btn-adventure:hover {
-            transform: translateY(-4px) translateZ(10px);
-            box-shadow: 0 15px 30px rgba(27, 67, 50, 0.25);
-            background: #1b4332;
-            color: white;
-        }
-
-        /* 3D Interactive Packages Grid */
-        .packages-container {
-            max-width: 1000px;
-            margin: 80px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
-        }
-
-        .safari-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.03);
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-        }
-
-        .safari-card:hover {
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-        }
-
-        .card-img {
             width: 100%;
-            height: 240px;
-            object-fit: cover;
-            transition: transform 0.5s ease;
         }
 
-        .safari-card:hover .card-img {
-            transform: scale(1.05);
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
         }
 
-        .card-content {
-            padding: 28px;
-            transform: translateZ(30px); /* Pushes text outward in 3D space */
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 40px;
         }
 
-        .card-content h3 {
+        .menu-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .menu-links a:hover {
+            color: #ffffff;
+        }
+
+        /* Bottom Row with Social Media Icons */
+        .menu-footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            width: 100%;
+            padding-top: 40px;
+        }
+
+        .menu-footer-socials a {
+            color: white;
             font-size: 22px;
-            color: #1b4332;
-            margin-bottom: 10px;
+            opacity: 0.9;
+            transition: opacity 0.2s ease, transform 0.2s ease;
         }
 
-        .card-content p {
-            color: #6b645d;
-            font-size: 15px;
-            line-height: 1.5;
+        .menu-footer-socials a:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        /* Hero Graphic Stack Layer matching video layout */
+        .hero-graphic-stack {
+            position: relative;
+            max-width: 340px;
+            height: 280px;
+            margin: 30px auto 40px auto;
+        }
+
+        .avatar-card {
+            position: absolute;
+            width: 130px;
+            height: 160px;
+            border-radius: 20px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 3px solid white;
+        }
+
+        /* Precise layering positions based on video frame */
+        .card-left {
+            background-image: url('https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=400');
+            left: 0;
+            bottom: 10px;
+            z-index: 1;
+            transform: rotate(-6deg);
+        }
+
+        .card-center {
+            background-image: url('https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=400');
+            left: 55%;
+            transform: translateX(-50%);
+            top: 0;
+            width: 140px;
+            height: 175px;
+            z-index: 3;
+        }
+
+        .card-right {
+            background-image: url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?auto=format&fit=crop&q=80&w=400');
+            right: 0;
+            bottom: 20px;
+            z-index: 2;
+            transform: rotate(8deg);
+        }
+
+        /* Floating Badges (Unicorn, Rainbow, Fire, Laugh Emoji) */
+        .floating-badge {
+            position: absolute;
+            font-size: 24px;
+            z-index: 10;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+            animation: floatingBounce 3s ease-in-out infinite;
+        }
+
+        .badge-unicorn { top: 10px; left: -10px; animation-delay: 0s; }
+        .badge-rainbow { top: -15px; right: 40px; animation-delay: 0.5s; }
+        .badge-laugh   { bottom: 20px; left: 60px; animation-delay: 1s; }
+        .badge-fire    { bottom: 40px; right: 0px; animation-delay: 1.5s; }
+
+        @keyframes floatingBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        /* Content Text Styles */
+        .main-content {
+            text-align: center;
+            padding: 0 24px;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+
+        .main-title {
+            font-size: 44px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.1;
+            letter-spacing: -1px;
             margin-bottom: 20px;
         }
 
-        .price-tag {
-            font-size: 18px;
+        .main-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #6b7280;
+            margin-bottom: 36px;
+        }
+
+        /* The Custom Rounded Action Button */
+        .action-container {
+            margin-bottom: 60px;
+        }
+
+        .btn-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: #4f46e5;
+            color: white;
+            padding: 16px 36px;
+            border-radius: 32px;
+            font-size: 16px;
             font-weight: 700;
-            color: #40916c;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 28px rgba(79, 70, 229, 0.45);
+        }
+
+        .btn-icon-circle {
+            background: rgba(255, 255, 255, 0.2);
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">Musembi Earthways</div>
+        <div class="logo">u earthways</div>
         <div class="nav-right">
-            <button class="btn-book">Plan a Trip</button>
-            <button class="menu-toggle" id="openBtn">☰</button>
+            <button class="btn-start-hiring">Plan Journey</button>
+            <button class="hamburger-btn" id="menuOpenBtn">
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </nav>
 
-    <!-- Slanted Menu Overlay -->
-    <div class="menu-overlay" id="menuOverlay">
-        <button class="close-menu" id="closeBtn">✕</button>
-        <a href="#">Destinations</a>
-        <a href="#">Safari Packages</a>
-        <a href="#">Our Story</a>
-        <a href="#">Contact</a>
+    <div class="menu-overlay" id="navSheet">
+        <div class="menu-header">
+            <button class="close-btn" id="menuCloseBtn">✕</button>
+        </div>
+        <div class="menu-links">
+            <a href="#">Destinations</a>
+            <a href="#">Safari Packages</a>
+            <a href="#">Pricing</a>
+            <a href="#">About Us</a>
+        </div>
+        <div class="menu-footer-socials">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
     </div>
 
-    <section class="hero">
-        <h1>Where the Wing Lands and Adventure Rolls</h1>
-        <p>Experience the raw elegance of Kenya's landscapes. From the legendary plains of the Maasai Mara to hidden eco-sanctuaries, we curate authentic journeys that honor the earth and move the soul.</p>
+    <div class="hero-graphic-stack">
+        <div class="floating-badge badge-unicorn">🦄</div>
+        <div class="floating-badge badge-rainbow">🌈</div>
+        <div class="floating-badge badge-laugh">😂</div>
+        <div class="floating-badge badge-fire">🔥</div>
+
+        <div class="avatar-card card-left"></div>
+        <div class="avatar-card card-center"></div>
+        <div class="avatar-card card-right"></div>
+    </div>
+
+    <main class="main-content">
+        <h1 class="main-title">Join the Safari Movement</h1>
+        <p class="main-description">
+            We're building the future of global travel — one journey at a time. If you're driven, proactive, and passionate about discovering the authentic plains of Kenya, Musembi Earthways is where you'll thrive.
+        </p>
         
-        <form action="http://127.0.0.1:5000/inquire" method="POST">
-            <button type="submit" class="btn-adventure">
-                Explore Packages
+        <form action="http://127.0.0.1:5000/explore" method="POST" class="action-container">
+            <button type="submit" class="btn-action">
+                <div class="btn-icon-circle">➔</div>
+                <span>Explore Safaris</span>
             </button>
         </form>
-    </section>
-
-    <!-- 3D Card Showcase -->
-    <main class="packages-container">
-        <div class="safari-card">
-            <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=600" alt="Maasai Mara Safari" class="card-img">
-            <div class="card-content">
-                <h3>The Great Migration Premium</h3>
-                <p>Witness millions of wildebeest cross the Mara River with luxury eco-tented hosting and private local tracking guides.</p>
-                <span class="price-tag">From $2,450 / person</span>
-            </div>
-        </div>
-
-        <div class="safari-card">
-            <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=600" alt="Amboseli Elephant Safari" class="card-img">
-            <div class="card-content">
-                <h3>Amboseli Eco-Trails</h3>
-                <p>Track Kenya's legendary giant tuskers under the snow-capped silhouette of Mount Kilimanjaro in community-owned conservancies.</p>
-                <span class="price-tag">From $1,850 / person</span>
-            </div>
-        </div>
     </main>
 
     <script>
-        // Fullscreen Menu Toggle
-        const menuOverlay = document.getElementById('menuOverlay');
-        const openBtn = document.getElementById('openBtn');
-        const closeBtn = document.getElementById('closeBtn');
+        const navSheet = document.getElementById('navSheet');
+        const menuOpenBtn = document.getElementById('menuOpenBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
 
-        openBtn.addEventListener('click', () => menuOverlay.classList.add('active'));
-        closeBtn.addEventListener('click', () => menuOverlay.classList.remove('active'));
+        // Handles sheet drop down transition
+        menuOpenBtn.addEventListener('click', () => {
+            navSheet.classList.add('active');
+        });
 
-        # Dynamic 3D Tilt Card Interaction
-        const cards = document.querySelectorAll('.safari-card');
-        
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                
-                const xc = rect.width / 2;
-                const yc = rect.height / 2;
-                
-                const angleX = (yc - y) / 15;
-                const angleY = (x - xc) / 15;
-                
-                card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.02)`;
-            });
+        // Handles sheet retraction animation
+        menuCloseBtn.addEventListener('click', () => {
+            navSheet.classList.remove('active');
+        });
+
+        // 3D Tilt interaction across stacked asset components
+        const cardStackContainer = document.querySelector('.hero-graphic-stack');
+        const layeredCards = document.querySelectorAll('.avatar-card');
+
+        cardStackContainer.addEventListener('mousemove', (e) => {
+            const bounds = cardStackContainer.getBoundingClientRect();
+            const pointerX = e.clientX - bounds.left;
+            const pointerY = e.clientY - bounds.top;
             
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            const positionX = (pointerX / bounds.width) - 0.5;
+            const positionY = (pointerY / bounds.height) - 0.5;
+
+            layeredCards.forEach((card, index) => {
+                const multiFactor = (index + 1) * 12;
+                card.style.transform = `translate(${positionX * multiFactor}px, ${positionY * multiFactor}px)`;
+            });
+        });
+
+        cardStackContainer.addEventListener('mouseleave', () => {
+            layeredCards.forEach((card) => {
+                card.style.transform = '';
             });
         });
     </script>
 </body>
 </html>
-
-
+                     
