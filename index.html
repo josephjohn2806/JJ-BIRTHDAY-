@@ -3,39 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assistantly - Join the Unicorn Movement</title>
+    <title>Musembi Earthways Safaris</title>
     <style>
-        /* Base Styles */
+        /* Base Styling */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
-            background-color: #fcfbfa;
-            color: #2d2d2d;
+            background-color: #fcfaf7;
+            color: #2b2621;
             overflow-x: hidden;
+            perspective: 1000px; /* Enables 3D space for animations */
         }
 
-        /* Navigation */
+        /* Glassmorphic Navigation */
         nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(252, 250, 247, 0.75);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
             position: sticky;
             top: 0;
             z-index: 100;
         }
 
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #4338ca;
+            font-size: 22px;
+            font-weight: 800;
+            color: #1b4332;
+            letter-spacing: -0.5px;
         }
 
         .nav-right {
@@ -44,60 +48,65 @@
             gap: 20px;
         }
 
-        .btn-start {
-            border: 1px solid #ddd;
-            padding: 10px 20px;
-            border-radius: 20px;
-            background: white;
+        .btn-book {
+            border: 1px solid #1b4332;
+            padding: 10px 24px;
+            border-radius: 25px;
+            background: transparent;
+            color: #1b4332;
             cursor: pointer;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s ease;
         }
 
-        .btn-start:hover {
-            background: #f3f4f6;
+        .btn-book:hover {
+            background: #1b4332;
+            color: white;
         }
 
         .menu-toggle {
-            font-size: 24px;
+            font-size: 26px;
             cursor: pointer;
             background: none;
             border: none;
+            color: #1b4332;
         }
 
-        /* Fullscreen Menu Overlay */
+        /* 3D Slanted Overlay Menu */
         .menu-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #6366f1, #a855f7);
+            background: linear-gradient(135deg, #1b4332, #40916c);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             gap: 30px;
-            transform: translateY(-100%);
-            transition: transform 0.5s ease-in-out;
+            transform: translateY(-100%) rotateX(-15deg);
+            transform-origin: top center;
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 99;
+            opacity: 0;
         }
 
         .menu-overlay.active {
-            transform: translateY(0);
+            transform: translateY(0) rotateX(0deg);
+            opacity: 1;
         }
 
         .menu-overlay a {
-            color: white;
+            color: #fefae0;
             text-decoration: none;
-            font-size: 32px;
-            font-weight: bold;
-            transition: 0.3s;
+            font-size: 36px;
+            font-weight: 700;
+            transition: transform 0.3s ease;
         }
 
         .menu-overlay a:hover {
-            opacity: 0.8;
-            transform: scale(1.05);
+            transform: scale(1.1) translateZ(20px);
         }
 
         .close-menu {
@@ -105,7 +114,7 @@
             top: 20px;
             right: 40px;
             font-size: 32px;
-            color: white;
+            color: #fefae0;
             background: none;
             border: none;
             cursor: pointer;
@@ -113,129 +122,197 @@
 
         /* Hero Section */
         .hero {
-            max-width: 800px;
+            max-width: 850px;
             margin: 60px auto;
             text-align: center;
             padding: 0 20px;
         }
 
         h1 {
-            font-size: 48px;
-            color: #1f2937;
+            font-size: 52px;
+            color: #1b4332;
             margin-bottom: 24px;
             font-weight: 800;
+            line-height: 1.1;
         }
 
         .hero p {
-            font-size: 18px;
-            color: #6b7280;
+            font-size: 19px;
+            color: #524c46;
             line-height: 1.6;
             margin-bottom: 40px;
         }
 
-        /* Interactive Apply Button */
-        .btn-apply {
+        /* Animated CTA Button */
+        .btn-adventure {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            background: #4f46e5;
-            color: white;
-            padding: 16px 40px;
+            gap: 12px;
+            background: #d8f3dc;
+            color: #1b4332;
+            padding: 18px 44px;
             border-radius: 40px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             text-decoration: none;
-            border: none;
+            border: 2px solid #1b4332;
             cursor: pointer;
-            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+            box-shadow: 0 8px 20px rgba(27, 67, 50, 0.15);
             transition: transform 0.3s, box-shadow 0.3s;
         }
 
-        .btn-apply:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(79, 70, 229, 0.6);
+        .btn-adventure:hover {
+            transform: translateY(-4px) translateZ(10px);
+            box-shadow: 0 15px 30px rgba(27, 67, 50, 0.25);
+            background: #1b4332;
+            color: white;
         }
 
-        /* Features Section */
-        .features {
-            max-width: 600px;
+        /* 3D Interactive Packages Grid */
+        .packages-container {
+            max-width: 1000px;
             margin: 80px auto;
             padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
         }
 
-        .card {
+        .safari-card {
             background: white;
-            border-radius: 16px;
-            padding: 30px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            border: 1px solid #f3f4f6;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
-        .card h3 {
-            margin-bottom: 12px;
-            color: #1f2937;
+        .safari-card:hover {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
         }
 
-        .card p {
-            color: #6b7280;
+        .card-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .safari-card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-content {
+            padding: 28px;
+            transform: translateZ(30px); /* Pushes text outward in 3D space */
+        }
+
+        .card-content h3 {
+            font-size: 22px;
+            color: #1b4332;
+            margin-bottom: 10px;
+        }
+
+        .card-content p {
+            color: #6b645d;
+            font-size: 15px;
             line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .price-tag {
+            font-size: 18px;
+            font-weight: 700;
+            color: #40916c;
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="logo">u assistantly</div>
+        <div class="logo">Musembi Earthways</div>
         <div class="nav-right">
-            <button class="btn-start">Start Hiring</button>
+            <button class="btn-book">Plan a Trip</button>
             <button class="menu-toggle" id="openBtn">☰</button>
         </div>
     </nav>
 
+    <!-- Slanted Menu Overlay -->
     <div class="menu-overlay" id="menuOverlay">
         <button class="close-menu" id="closeBtn">✕</button>
-        <a href="#">Unicorns</a>
-        <a href="#">Process</a>
-        <a href="#">Pricing</a>
-        <a href="#">About</a>
+        <a href="#">Destinations</a>
+        <a href="#">Safari Packages</a>
+        <a href="#">Our Story</a>
+        <a href="#">Contact</a>
     </div>
 
     <section class="hero">
-        <h1>Join the Unicorn Movement</h1>
-        <p>We're building the future of global work — one Unicorn at a time. If you're driven, proactive, and passionate about making real impact for clients, Assistantly is where you'll thrive, grow, and be seen.</p>
+        <h1>Where the Wing Lands and Adventure Rolls</h1>
+        <p>Experience the raw elegance of Kenya's landscapes. From the legendary plains of the Maasai Mara to hidden eco-sanctuaries, we curate authentic journeys that honor the earth and move the soul.</p>
         
-        <form action="http://127.0.0.1:5000/apply" method="POST">
-            <button type="submit" class="btn-apply">
-                <span>→</span> Apply Now
+        <form action="http://127.0.0.1:5000/inquire" method="POST">
+            <button type="submit" class="btn-adventure">
+                Explore Packages
             </button>
         </form>
     </section>
 
-    <section class="features">
-        <div class="card">
-            <h3>People First</h3>
-            <p>Fair pay, real benefits, and a workplace where you're valued for your mind, not just your output.</p>
+    <!-- 3D Card Showcase -->
+    <main class="packages-container">
+        <div class="safari-card">
+            <img src="https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=600" alt="Maasai Mara Safari" class="card-img">
+            <div class="card-content">
+                <h3>The Great Migration Premium</h3>
+                <p>Witness millions of wildebeest cross the Mara River with luxury eco-tented hosting and private local tracking guides.</p>
+                <span class="price-tag">From $2,450 / person</span>
+            </div>
         </div>
-        <div class="card">
-            <h3>Growth & Mentorship</h3>
-            <p>From Success Pods to performance coaching, you'll always have support, guidance, and career direction.</p>
+
+        <div class="safari-card">
+            <img src="https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=600" alt="Amboseli Elephant Safari" class="card-img">
+            <div class="card-content">
+                <h3>Amboseli Eco-Trails</h3>
+                <p>Track Kenya's legendary giant tuskers under the snow-capped silhouette of Mount Kilimanjaro in community-owned conservancies.</p>
+                <span class="price-tag">From $1,850 / person</span>
+            </div>
         </div>
-    </section>
+    </main>
 
     <script>
+        // Fullscreen Menu Toggle
         const menuOverlay = document.getElementById('menuOverlay');
         const openBtn = document.getElementById('openBtn');
         const closeBtn = document.getElementById('closeBtn');
 
-        openBtn.addEventListener('click', () => {
-            menuOverlay.classList.add('active');
-        });
+        openBtn.addEventListener('click', () => menuOverlay.classList.add('active'));
+        closeBtn.addEventListener('click', () => menuOverlay.classList.remove('active'));
 
-        closeBtn.addEventListener('click', () => {
-            menuOverlay.classList.remove('active');
+        # Dynamic 3D Tilt Card Interaction
+        const cards = document.querySelectorAll('.safari-card');
+        
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                
+                const angleX = (yc - y) / 15;
+                const angleY = (x - xc) / 15;
+                
+                card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+            });
         });
     </script>
 </body>
 </html>
+
 
