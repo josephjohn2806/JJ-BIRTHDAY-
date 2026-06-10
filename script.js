@@ -1,44 +1,39 @@
-// script.js
-function scrollToAbout() {
-  document.getElementById("about").scrollIntoView({ behavior: "smooth" });
-}
+// Fullscreen Menu Toggle
+const menuOverlay = document.getElementById('menuOverlay');
+const openBtn = document.getElementById('openBtn');
+const closeBtn = document.getElementById('closeBtn');
 
-// THREE.JS SAFARI SCENE
-const container = document.getElementById("threejs-container");
-const scene = new THREE.Scene();
+openBtn.addEventListener('click', () => {
+    menuOverlay.classList.add('active');
+});
 
-// Camera
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
-camera.position.set(0, 2, 5);
+closeBtn.addEventListener('click', () => {
+    menuOverlay.classList.remove('active');
+});
 
-// Renderer
-const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-container.appendChild(renderer.domElement);
+// Dynamic 3D Tilt Card Interaction
+const cards = document.querySelectorAll('.safari-card');
 
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-scene.add(ambientLight);
-const sunLight = new THREE.DirectionalLight(0xffd27f, 1);
-sunLight.position.set(5, 10, 7);
-scene.add(sunLight);
+cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left; // Mouse position X relative to card
+        const y = e.clientY - rect.top;  // Mouse position Y relative to card
+        
+        const xc = rect.width / 2;       // Card center X
+        const yc = rect.height / 2;      // Card center Y
+        
+        // Calculate tilt angles based on cursor offset from center
+        const angleX = (yc - y) / 15;
+        const angleY = (x - xc) / 15;
+        
+        // Apply smooth 3D rotation matrix
+        card.style.transform = `rotateX(${angleX}deg) rotateY(${angleY}deg) scale(1.02)`;
+    });
+    
+    // Smooth reset when user moves cursor away
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
+    });
+});
 
-// Ground (savannah)
-const groundGeometry = new THREE.PlaneGeometry(50, 50);
-const groundMaterial = new THREE.MeshLambertMaterial({ color: 0xc2b280 });
-const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-ground.rotation.x = -Math.PI / 2;
-scene.add(ground);
-
-// Placeholder Safari Jeep (cube)
-const jeepGeometry = new THREE.BoxGeometry(1, 0.5, 2);
-const jeepMaterial = new THREE.MeshLambertMaterial({ color: 0x2c3e50 });
-const jeep = new THREE.Mesh(jeepGeometry, jeepMaterial);
-jeep.position.y = 0.25;
-scene.add(jeep);
-
-// Animation loop
-function animate() {
-  requestAnimationFrame(animate);
-  jeep.position.x += 0.02; // jeep drives forward
-  if (jeep.position
