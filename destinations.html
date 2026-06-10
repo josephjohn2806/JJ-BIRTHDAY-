@@ -78,7 +78,7 @@
             border-radius: 2px;
         }
 
-        /* Menu Overlay matching image 1781105930612.jpeg */
+        /* Menu Overlay Fixed - Hidden by default */
         .menu-overlay {
             position: fixed;
             top: 0;
@@ -87,18 +87,17 @@
             height: 100vh;
             background: #5846f6;
             z-index: 200;
-            display: flex;
+            display: none; /* Keeps it hidden on load */
             flex-direction: column;
             justify-content: space-between;
             padding: 40px 24px 60px 24px;
-            transform: translateY(-100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
         }
 
+        /* Displays only when active */
         .menu-overlay.active {
-            transform: translateY(0);
+            display: flex;
         }
 
         .menu-header {
@@ -155,7 +154,7 @@
             text-decoration: none;
         }
 
-        /* Layout Main Elements */
+        /* Graphic Elements */
         .hero-graphic-stack {
             position: relative;
             max-width: 340px;
@@ -245,12 +244,11 @@
             <button class="hamburger-btn" id="menuOpenBtn">
                 <span></span>
                 <span></span>
-                <span></span>
             </button>
         </div>
     </nav>
 
-    <!-- Overlay matching image 1781105930612.jpeg -->
+    <!-- Overlay Configuration -->
     <div class="menu-overlay" id="navSheet">
         <div class="menu-header">
             <button class="close-btn" id="menuCloseBtn"><i class="fas fa-times"></i></button>
@@ -299,33 +297,10 @@
         const menuOpenBtn = document.getElementById('menuOpenBtn');
         const menuCloseBtn = document.getElementById('menuCloseBtn');
 
-        menuOpenBtn.addEventListener('click', () => {
-            navSheet.classList.add('active');
-        });
-
-        menuCloseBtn.addEventListener('click', () => {
-            navSheet.classList.remove('active');
-        });
-
-        const cardStackContainer = document.querySelector('.hero-graphic-stack');
-        const layeredCards = document.querySelectorAll('.avatar-card');
-
-        if (cardStackContainer) {
-            cardStackContainer.addEventListener('mousemove', (e) => {
-                const bounds = cardStackContainer.getBoundingClientRect();
-                const positionX = ((e.clientX - bounds.left) / bounds.width) - 0.5;
-                const positionY = ((e.clientY - bounds.top) / bounds.height) - 0.5;
-
-                layeredCards.forEach((card, index) => {
-                    const multiFactor = (index + 1) * 12;
-                    card.style.transform = `translate(${positionX * multiFactor}px, ${positionY * multiFactor}px)`;
-                });
-            });
-
-            cardStackContainer.addEventListener('mouseleave', () => {
-                layeredCards.forEach(card => card.style.transform = '');
-            });
-        }
+        menuOpenBtn.addEventListener('click', () => navSheet.classList.add('active'));
+        menuCloseBtn.addEventListener('click', () => navSheet.classList.remove('active'));
     </script>
 </body>
 </html>
+
+        
