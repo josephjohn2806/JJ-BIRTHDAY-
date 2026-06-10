@@ -3,63 +3,234 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safari Packages - Musembi Earthways</title>
+    <title>Safari Packages - Musembi Earthways Safaris</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Shared Stylesheets Framework */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
-        body { background-color: #fcfbfa; color: #1f2937; }
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 24px 20px; background: rgba(252, 251, 250, 0.9); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: 700; color: #111827; text-decoration: none; letter-spacing: -0.5px; }
-        .nav-right { display: flex; align-items: center; gap: 16px; }
-        .btn-nav-action { background: white; color: #1f2937; border: 1px solid #e5e7eb; padding: 10px 20px; border-radius: 24px; font-size: 14px; font-weight: 600; cursor: pointer; }
-        .hamburger-btn { background: #f3f4f6; border: none; width: 44px; height: 44px; border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 5px; cursor: pointer; }
-        .hamburger-btn span { display: block; width: 18px; height: 2px; background: #1f2937; }
-        
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: #4f46e5; z-index: 200; display: flex; flex-direction: column; justify-content: space-between; padding: 40px 24px 60px 24px; transform: translateY(-100%); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
-        .menu-overlay.active { transform: translateY(0); }
-        .close-btn { background: rgba(255, 255, 255, 0.2); border: none; width: 44px; height: 44px; border-radius: 50%; color: white; font-size: 20px; cursor: pointer; float: right; }
-        .menu-links { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
-        .menu-links a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 28px; font-weight: 500; }
-        .menu-links a:hover { color: #ffffff; }
-        .menu-footer-socials { display: flex; justify-content: center; gap: 28px; }
-        .menu-footer-socials a { color: white; font-size: 22px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-        .container { max-width: 480px; margin: 0 auto; padding: 24px; text-align: center; }
-        .page-title { font-size: 38px; font-weight: 800; color: #111827; margin-bottom: 12px; letter-spacing: -1px; }
-        .page-subtitle { font-size: 16px; color: #6b7280; margin-bottom: 40px; line-height: 1.5; }
+        body {
+            background-color: #fcfbfa;
+            color: #1f2937;
+            overflow-x: hidden;
+        }
 
-        .package-item {
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 20px;
+            background: rgba(252, 251, 250, 0.9);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: -0.5px;
+            text-decoration: none;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-start-hiring {
             background: white;
-            border-radius: 24px;
+            color: #1f2937;
             border: 1px solid #e5e7eb;
-            padding: 24px;
+            padding: 10px 20px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .hamburger-btn {
+            background: #f3f4f6;
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .hamburger-btn span {
+            display: block;
+            width: 18px;
+            height: 2px;
+            background: #1f2937;
+            border-radius: 2px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #4f46e5;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 40px 24px 60px 24px;
+            transform: translateY(-100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .menu-overlay.active {
+            transform: translateY(0);
+        }
+
+        .menu-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 100%;
+        }
+
+        .close-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .menu-links {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .menu-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        .menu-links a:hover {
+            color: #ffffff;
+        }
+
+        .menu-footer-socials {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            width: 100%;
+            padding-top: 40px;
+        }
+
+        .menu-footer-socials a {
+            color: white;
+            font-size: 22px;
+        }
+
+        .main-content {
+            text-align: center;
+            padding: 0 24px;
+            max-width: 480px;
+            margin: 40px auto 60px auto;
+        }
+
+        .main-title {
+            font-size: 44px;
+            font-weight: 800;
+            color: #111827;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 36px;
+        }
+
+        /* Custom Structured Package Form Elements */
+        .package-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 24px;
+            padding: 30px 24px;
             margin-bottom: 24px;
             text-align: left;
         }
 
-        .duration-pill {
-            display: inline-block;
-            background: #f3f4f6;
-            color: #4b5563;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
+        .package-meta {
+            font-size: 13px;
+            color: #6b7280;
             font-weight: 600;
-            margin-bottom: 14px;
+            margin-bottom: 8px;
         }
 
-        .package-name { font-size: 22px; font-weight: 700; color: #111827; margin-bottom: 10px; }
-        .package-desc { font-size: 14px; color: #6b7280; line-height: 1.5; margin-bottom: 20px; }
-        
-        .apply-link {
-            color: #4f46e5;
-            text-decoration: none;
-            font-weight: 700;
+        .package-heading {
+            font-size: 24px;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .package-description {
             font-size: 15px;
+            line-height: 1.6;
+            color: #4b5563;
+            margin-bottom: 24px;
+        }
+
+        /* Action Form Button Matching index.html */
+        .btn-action {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 12px;
+            background: #4f46e5;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 32px;
+            font-size: 15px;
+            font-weight: 700;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(79, 70, 229, 0.25);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-action:hover {
+            transform: scale(1.02);
+        }
+
+        .btn-icon-circle {
+            background: rgba(255, 255, 255, 0.2);
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
         }
     </style>
 </head>
@@ -68,7 +239,7 @@
     <nav>
         <a href="index.html" class="logo">u earthways</a>
         <div class="nav-right">
-            <button class="btn-nav-action">Plan Journey</button>
+            <button class="btn-start-hiring">Plan Journey</button>
             <button class="hamburger-btn" id="menuOpenBtn">
                 <span></span>
                 <span></span>
@@ -77,14 +248,14 @@
     </nav>
 
     <div class="menu-overlay" id="navSheet">
-        <div>
+        <div class="menu-header">
             <button class="close-btn" id="menuCloseBtn">✕</button>
-            <div class="menu-links">
-                <a href="destinations.html">Destinations</a>
-                <a href="packages.html">Safari Packages</a>
-                <a href="pricing.html">Pricing</a>
-                <a href="about.html">About Us</a>
-            </div>
+        </div>
+        <div class="menu-links">
+            <a href="destinations.html">Destinations</a>
+            <a href="packages.html">Safari Packages</a>
+            <a href="pricing.html">Pricing</a>
+            <a href="about.html">About Us</a>
         </div>
         <div class="menu-footer-socials">
             <a href="#"><i class="fab fa-facebook-f"></i></a>
@@ -94,30 +265,45 @@
         </div>
     </div>
 
-    <main class="container">
-        <h1 class="page-title">Safari Packages</h1>
-        <p class="page-subtitle">Immersive travel options built around wildlife tracing and eco-conservation principles.</p>
+    <main class="main-content">
+        <h1 class="main-title">Safari Packages</h1>
 
-        <div class="package-item">
-            <span class="duration-pill">6 Days / 5 Nights</span>
-            <h3 class="package-name">The Crested Flight Path</h3>
-            <p class="package-desc">An aerial and off-road expedition covering major water systems, flamingo crossings, and prime predatory tracking reserves.</p>
-            <a href="#" class="apply-link">Inquire Here ➔</a>
+        <div class="package-card">
+            <div class="package-meta">6 Days • Custom Guided</div>
+            <h2 class="package-heading">The Crested Flight Path</h2>
+            <p class="package-description">
+                An intense, multi-terrain migration tracking route passing through spectacular wetland reserves and major valley pathways.
+            </p>
+            <form action="http://127.0.0.1:5000/explore" method="POST">
+                <button type="submit" class="btn-action">
+                    <div class="btn-icon-circle">➔</div>
+                    <span>Book Route</span>
+                </button>
+            </form>
         </div>
 
-        <div class="package-item">
-            <span class="duration-pill">9 Days / 8 Nights</span>
-            <h3 class="package-name">Earthway Heritage Trail</h3>
-            <p class="package-desc">Deep cultural immersion safari tracking large northern mammals while working alongside local community conservancy groups.</p>
-            <a href="#" class="apply-link">Inquire Here ➔</a>
+        <div class="package-card">
+            <div class="package-meta">9 Days • Heritage Tour</div>
+            <h2 class="package-heading">Earthway Heritage Trail</h2>
+            <p class="package-description">
+                Deep community immersion exploring protected ancestral plains alongside local tracking guides and conservation crews.
+            </p>
+            <form action="http://127.0.0.1:5000/explore" method="POST">
+                <button type="submit" class="btn-action">
+                    <div class="btn-icon-circle">➔</div>
+                    <span>Book Route</span>
+                </button>
+            </form>
         </div>
     </main>
 
     <script>
         const navSheet = document.getElementById('navSheet');
-        document.getElementById('menuOpenBtn').addEventListener('click', () => navSheet.classList.add('active'));
-        document.getElementById('menuCloseBtn').addEventListener('click', () => navSheet.classList.remove('active'));
+        const menuOpenBtn = document.getElementById('menuOpenBtn');
+        const menuCloseBtn = document.getElementById('menuCloseBtn');
+
+        menuOpenBtn.addEventListener('click', () => navSheet.classList.add('active'));
+        menuCloseBtn.addEventListener('click', () => navSheet.classList.remove('active'));
     </script>
 </body>
 </html>
-
