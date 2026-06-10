@@ -239,17 +239,18 @@
 <body>
 
     <nav>
-        <a href="index.html" class="logo">u earthways</a>
+        <a href="destinations.html" class="logo">u earthways</a>
         <div class="nav-right">
             <button class="btn-start-hiring">Plan Journey</button>
             <button class="hamburger-btn" id="menuOpenBtn">
+                <span></span>
                 <span></span>
                 <span></span>
             </button>
         </div>
     </nav>
 
-    <!-- Overlay configured exact to image 1781105930612.jpeg -->
+    <!-- Overlay matching image 1781105930612.jpeg -->
     <div class="menu-overlay" id="navSheet">
         <div class="menu-header">
             <button class="close-btn" id="menuCloseBtn"><i class="fas fa-times"></i></button>
@@ -298,27 +299,33 @@
         const menuOpenBtn = document.getElementById('menuOpenBtn');
         const menuCloseBtn = document.getElementById('menuCloseBtn');
 
-        menuOpenBtn.addEventListener('click', () => navSheet.classList.add('active'));
-        menuCloseBtn.addEventListener('click', () => navSheet.classList.remove('active'));
+        menuOpenBtn.addEventListener('click', () => {
+            navSheet.classList.add('active');
+        });
+
+        menuCloseBtn.addEventListener('click', () => {
+            navSheet.classList.remove('active');
+        });
 
         const cardStackContainer = document.querySelector('.hero-graphic-stack');
         const layeredCards = document.querySelectorAll('.avatar-card');
 
-        cardStackContainer.addEventListener('mousemove', (e) => {
-            const bounds = cardStackContainer.getBoundingClientRect();
-            const positionX = ((e.clientX - bounds.left) / bounds.width) - 0.5;
-            const positionY = ((e.clientY - bounds.top) / bounds.height) - 0.5;
+        if (cardStackContainer) {
+            cardStackContainer.addEventListener('mousemove', (e) => {
+                const bounds = cardStackContainer.getBoundingClientRect();
+                const positionX = ((e.clientX - bounds.left) / bounds.width) - 0.5;
+                const positionY = ((e.clientY - bounds.top) / bounds.height) - 0.5;
 
-            layeredCards.forEach((card, index) => {
-                const multiFactor = (index + 1) * 12;
-                card.style.transform = `translate(${positionX * multiFactor}px, ${positionY * multiFactor}px)`;
+                layeredCards.forEach((card, index) => {
+                    const multiFactor = (index + 1) * 12;
+                    card.style.transform = `translate(${positionX * multiFactor}px, ${positionY * multiFactor}px)`;
+                });
             });
-        });
 
-        cardStackContainer.addEventListener('mouseleave', () => {
-            layeredCards.forEach(card => card.style.transform = '');
-        });
+            cardStackContainer.addEventListener('mouseleave', () => {
+                layeredCards.forEach(card => card.style.transform = '');
+            });
+        }
     </script>
 </body>
 </html>
-
