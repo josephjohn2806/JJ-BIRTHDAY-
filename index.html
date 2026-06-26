@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JJ's Premium 3D Birthday Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --cake-pink: #c19193; 
-            --accent-glow: rgba(193, 145, 147, 0.3);
             --bg-dark: #120b0c;
-            --card-bg: rgba(34, 22, 24, 0.7);
+            --card-bg: rgba(42, 29, 31, 0.7); 
             --glass-border: rgba(255, 255, 255, 0.08);
             --text-light: #f5eae9;
         }
@@ -22,24 +21,21 @@
             box-sizing: border-box;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
             font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
-        /* Top Navigation Bar inspired by Video */
+        /* Top Navigation Bar */
         header {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(18, 11, 12, 0.85);
+            background: rgba(18, 11, 12, 0.9);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
@@ -51,113 +47,79 @@
 
         .logo {
             font-weight: 700;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--cake-pink);
             letter-spacing: 2px;
         }
 
-        nav a {
-            color: var(--text-light);
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
-        }
-
-        nav a:hover {
-            color: var(--cake-pink);
-        }
-
-        /* Floating Widget Inspired by the Video Sidebar Profile */
-        .floating-profile-widget {
-            position: fixed;
-            right: 30px;
-            bottom: 40px;
-            background: var(--cake-pink);
-            color: var(--bg-dark);
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 0 8px 25px rgba(193, 145, 147, 0.5);
-            z-index: 999;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 1.2rem;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .floating-profile-widget:hover {
-            transform: scale(1.1) rotate(15deg);
-        }
-
-        /* Main Sections Layout */
-        section {
-            padding: 100px 5% 60px 5%;
-            min-height: 85vh;
+        /* Hero Area */
+        .hero {
+            height: 50vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
+            text-align: center;
+            padding-top: 80px;
         }
 
-        .section-title {
-            font-size: 2.5rem;
+        .hero-title {
+            font-size: 5rem;
             color: var(--cake-pink);
-            margin-bottom: 10px;
-            text-align: center;
-            text-transform: uppercase;
+            text-shadow: 0 4px 20px rgba(193, 145, 147, 0.5);
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .badge-premium {
+            background: var(--cake-pink);
+            color: var(--bg-dark);
+            padding: 6px 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 0.8rem;
             letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 15px;
+            cursor: pointer;
         }
 
-        .section-subtitle {
-            font-size: 1rem;
-            opacity: 0.7;
-            margin-bottom: 40px;
-            text-align: center;
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 60px 20px;
         }
 
-        /* 3D Image Slider/Carousel Container */
+        /* 3D Showcase Perspective Box */
         .stage-3d {
-            perspective: 1100px;
+            perspective: 1200px;
             width: 100%;
-            height: 400px;
+            height: 380px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-top: 20px;
+            margin: 40px 0;
         }
 
         .carousel-3d {
-            width: 240px;
-            height: 320px;
+            width: 200px;
+            height: 280px;
             position: relative;
             transform-style: preserve-3d;
-            animation: rotateCarousel 25s infinite linear;
-        }
-
-        .carousel-3d:hover {
-            animation-play-state: paused;
+            animation: spinCarousel 30s infinite linear;
         }
 
         .carousel-item-3d {
             position: absolute;
-            width: 240px;
-            height: 320px;
+            width: 200px;
+            height: 280px;
             left: 0;
             top: 0;
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             border: 2px solid var(--glass-border);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
             transition: border-color 0.3s;
-        }
-        .carousel-item-3d:hover {
-            border-color: var(--cake-pink);
         }
 
         .carousel-item-3d img {
@@ -166,57 +128,218 @@
             object-fit: cover;
         }
 
-        /* 3D Image Positioning (10 Images total = 36 degrees apart) */
-        .carousel-item-3d:nth-child(1)  { transform: rotateY(0deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(2)  { transform: rotateY(36deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(3)  { transform: rotateY(72deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(4)  { transform: rotateY(108deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(5)  { transform: rotateY(144deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(6)  { transform: rotateY(180deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(7)  { transform: rotateY(216deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(8)  { transform: rotateY(252deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(9)  { transform: rotateY(288deg) translateZ(400px); }
-        .carousel-item-3d:nth-child(10) { transform: rotateY(324deg) translateZ(400px); }
-
-        /* 3D Immersive Interactive Cake Display */
-        .cake-stage {
-            perspective: 800px;
-            width: 300px;
-            height: 300px;
-            margin: 20px auto;
+        .carousel-item-3d:hover {
+            border-color: var(--cake-pink);
         }
 
-        .cake-3d {
+        /* Mathematically spacing 10 images around the Y-axis ring */
+        .carousel-item-3d:nth-child(1)  { transform: rotateY(0deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(2)  { transform: rotateY(36deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(3)  { transform: rotateY(72deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(4)  { transform: rotateY(108deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(5)  { transform: rotateY(144deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(6)  { transform: rotateY(180deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(7)  { transform: rotateY(216deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(8)  { transform: rotateY(252deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(9)  { transform: rotateY(288deg) translateZ(350px); }
+        .carousel-item-3d:nth-child(10) { transform: rotateY(324deg) translateZ(350px); }
+
+        /* Animated Cake Container */
+        .cake-container {
+            background: var(--cake-pink);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            margin: 40px auto;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .cake-svg {
+            width: 160px;
+            height: auto;
+        }
+
+        .cake-text {
+            color: #3d2b2c;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-top: 20px;
+            letter-spacing: 1px;
+        }
+
+        /* Grid Layout for Cards */
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .interactive-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            backdrop-filter: blur(10px);
+        }
+
+        h3 {
+            color: var(--cake-pink);
+            margin-bottom: 20px;
+        }
+
+        .rater-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(193, 145, 147, 0.4);
+        }
+
+        input, textarea {
             width: 100%;
-            height: 100%;
-            position: relative;
-            transform-style: preserve-3d;
-            transform: rotateX(-20deg) rotateY(45deg);
-            animation: spinCake 12s infinite linear;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            margin-bottom: 15px;
         }
 
-        .cake-cylinder {
-            position: absolute;
-            width: 160px;
-            height: 100px;
-            left: 70px;
-            top: 100px;
-            transform-style: preserve-3d;
+        .btn-theme {
+            background: transparent;
+            border: 1px solid var(--cake-pink);
+            color: var(--cake-pink);
+            padding: 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+            transition: all 0.3s;
         }
 
-        .cake-face {
-            position: absolute;
-            width: 160px;
-            height: 100px;
-            background: linear-gradient(to bottom, #5a4547, #423334);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .btn-theme:hover {
+            background: var(--cake-pink);
+            color: var(--bg-dark);
         }
 
-        /* 3D Side panels mapping */
-        .cake-face:nth-child(1) { transform: rotateY(0deg) translateZ(80px); }
-        .cake-face:nth-child(2) { transform: rotateY(90deg) translateZ(80px); }
-        .cake-face:nth-child(3) { transform: rotateY(180deg) translateZ(80px); }
-        .cake-face:nth-child(Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+        .wishes-display {
+            max-height: 180px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+
+        .wish-node {
+            padding: 8px 0;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+
+        .wish-node span { color: var(--cake-pink); }
+
+        @keyframes spinCarousel {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">SOVA EDITIONS</div>
+    </header>
+
+    <section class="hero">
+        <h1 class="hero-title" onclick="triggerConfetti()">JJ</h1>
+        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.8;">The 3D Birthday Carousel</p>
+        <span class="badge-premium" onclick="triggerConfetti()">⚡ Release Confetti</span>
+    </section>
+
+    <main class="container">
+
+        <!-- 3D Image Carousel Stage -->
+        <div class="stage-3d">
+            <div class="carousel-3d">
+                <div class="carousel-item-3d"><img src="1000187645.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000174187.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000163303.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000162372.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000156529.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000139556.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000129325.jpg" alt="Slide"></div>
+                <div class="carousel-item-3d"><img src="1000114478.jpg" alt="Slide"></div>
+            </div>
+        </div>
+
+        <!-- Birthday Cake Module -->
+        <section class="cake-container">
+            <svg class="cake-svg" viewBox="0 0 200 160">
+                <rect x="20" y="130" width="160" height="8" rx="4" fill="#503e3f" />
+                <rect x="35" y="90" width="130" height="40" fill="#423334" />
+                <rect x="35" y="60" width="130" height="30" fill="#5a4547" />
+                <path d="M35,60 Q45,70 55,60 T75,60 T95,60 T115,60 T135,60 T155,60 T165,60 L165,52 Q165,48 155,48 L45,48 Q35,48 35,52 Z" fill="#e3d5d6" />
+                <rect x="96" y="20" width="8" height="28" fill="#ffffff" />
+                <path d="M100,2 Q104,10 100,18 Q96,10 100,2 Z" fill="#ffbc42" />
+            </svg>
+            <div class="cake-text">happy birthday JJ!</div>
+        </section>
+
+        <div class="grid-layout">
+            <!-- Fit Rater Component -->
+            <div class="interactive-card" style="text-align: center;">
+                <h3>Fit Evaluation Matrix</h3>
+                <div class="rater-score" id="score-display">99.8%</div>
+                <button class="btn-theme" onclick="rateFit()">Evaluate Profile</button>
+            </div>
+
+            <!-- Tribute Log Interface -->
+            <div class="interactive-card">
+                <h3>The Global Tribute Wall</h3>
+                <form id="tributeSystem">
+                    <input type="text" id="author" placeholder="Your Name" required>
+                    <textarea id="note" rows="2" placeholder="Send your congratulations..." required></textarea>
+                    <button type="submit" class="btn-theme">Publish Sentiments</button>
+                </form>
+                <div class="wishes-display" id="board">
+                    <div class="wish-node"><span>System</span>: Dashboard deployed online successfully. 🥂</div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        });
+
+        function triggerConfetti() {
+            confetti({ particleCount: 80, spread: 60, colors: ['#c19193', '#ffffff'] });
+        }
+
+        function rateFit() {
+            triggerConfetti();
+            const score = (Math.random() * (100 - 96) + 96).toFixed(2);
+            document.getElementById('score-display').innerText = score + "%";
+        }
+
+        document.getElementById('tributeSystem').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('author').value;
+            const text = document.getElementById('note').value;
+            const board = document.getElementById('board');
+            board.innerHTML = `<div class="wish-node"><span>${user}</span>: ${text}</div>` + board.innerHTML;
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>
+
+
 
 
 
