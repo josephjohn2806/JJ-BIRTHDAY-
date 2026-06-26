@@ -1,1 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Celebrating JJ | Extraordinary Elegance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(135deg, #0f0f11 0%, #1a1a24 100%);
+            --gold: #d4af37;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        /* Hero Section with 3D Depth */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: 4rem;
+            letter-spacing: 6px;
+            color: var(--gold);
+            text-shadow: 0 0 30px var(--gold-glow);
+            margin-bottom: 10px;
+            transform: translateZ(50px);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .hero-subtitle {
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            transform: translateZ(30px);
+        }
+
+        /* Glassmorphic Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        h2 {
+            font-family: 'Cinzel', serif;
+            text-align: center;
+            color: var(--gold);
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+        }
+
+        /* 3D Interactive Grid */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .memory-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .memory-card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--gold-glow);
+            border-color: var(--gold);
+        }
+
+        .memory-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: #222; /* Placeholder styling */
+        }
+
+        /* Luxury Forms & Widgets */
+        .luxury-pane {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 40px;
+            margin-bottom: 5px;
+        }
+
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 8px;
+            color: white;
+            font-family: inherit;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255,255,255,0.08);
+        }
+
+        .btn-gold {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px 30px;
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        .btn-gold:hover {
+            background: var(--gold);
+            color: #000;
+            box-shadow: 0 0 20px var(--gold-glow);
+        }
+
+        .mpesa-badge {
+            display: inline-block;
+            background: #4B9445;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* Wishes display section */
+        .wishes-box {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding-right: 10px;
+        }
+
+        .wish-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--glass-border);
+            font-size: 0.9rem;
+        }
+        .wish-item strong { color: var(--gold); }
+
+        @keyframes float {
+            0%, 100% { transform: translateZ(50px) translateY(0); }
+            50% { transform: translateZ(50px) translateY(-10px); }
+        }
+
+        @media (max-width: 768px) {
+            .split-layout { grid-template-columns: 1fr; }
+            .hero-title { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <h1 class="hero-title">JJ</h1>
+        <p class="hero-subtitle">The Celebration of a Legend</p>
+    </section>
+
+    <main class="container">
+        
+        <h2>Chapters of Excellence</h2>
+        <div class="memory-grid">
+            <div class="memory-card" data-tilt>
+                <div class="memory-img" style="display:flex; align-items:center; justify-content:center; color:#555;">[ Photo Placeholder 1 ]</div>
+                <h3 style="color:var(--gold); font-family:'Cinzel'; margin-bottom:5px;">Vision & Grit</h3>
+                <p style="font-size:0.85rem; opacity:0.7;">Moments captured through a lifetime of building dreams.</p>
+            </div>
+            <div class="memory-card" data-tilt>
+                <div class="memory-img" style="display:flex; align-items:center; justify-content:center; color:#555;">[ Photo Placeholder 2 ]</div>
+                <h3 style="color:var(--gold); font-family:'Cinzel'; margin-bottom:5px;">Pure Legacy</h3>
+                <p style="font-size:0.85rem; opacity:0.7;">Celebrating the milestones that define an era.</p>
+            </div>
+        </div>
+
+        <div class="luxury-pane split-layout">
+            <div>
+                <span class="mpesa-badge">M-PESA EXPRESS</span>
+                <h3 style="font-family:'Cinzel'; font-size:1.8rem; margin-bottom:10px;">Send a Birthday Blessing</h3>
+                <p style="font-size:0.9rem; opacity:0.7; margin-bottom:25px;">Honour JJ's special day directly via M-Pesa secure checkout channel.</p>
+                
+                <form id="paymentForm">
+                    <input type="text" id="phone" placeholder="Phone Number (e.g., 2547XXXXXXXX)" required>
+                    <input type="number" id="amount" placeholder="Amount (KES)" required>
+                    <button type="submit" class="btn-gold">Initiate Gift Securely</button>
+                </form>
+            </div>
+
+            <div>
+                <h3 style="font-family:'Cinzel'; font-size:1.8rem; margin-bottom:10px;">Leave Your Tribute</h3>
+                <form id="wishForm">
+                    <input type="text" id="senderName" placeholder="Your Distinguished Name" required>
+                    <textarea id="message" rows="3" placeholder="Write your tribute here..." required></textarea>
+                    <button type="submit" class="btn-gold">Publish Wish</button>
+                </form>
+
+                <div class="wishes-box" id="wishesBox">
+                    </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // 3D Card Hover Interaction effect
+        const cards = document.querySelectorAll('.memory-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - (rect.width/2);
+                const y = e.clientY - rect.top - (rect.height/2);
+                card.style.transform = `translateY(-10px) rotateX(${-y / 10}deg) rotateY(${x / 10}deg)`;
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
+            });
+        });
+
+        // Async API Handling for Gifting and Wishes
+        document.getElementById('wishForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('senderName').value;
+            const text = document.getElementById('message').value;
+
+            // Appends directly to UI instantly for feedback
+            const container = document.getElementById('wishesBox');
+            container.innerHTML = `<div class="wish-item"><strong>${name}</strong>: "${text}"</div>` + container.innerHTML;
+            
+            // API Trigger configuration
+            /*
+            await fetch('/api/wishes', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ name, text })
+            });
+            */
+            e.target.reset();
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            alert("M-Pesa STK Push Initialized. Confirm on your handset.");
+        });
+    </script>
+</body>
+</html>
 
