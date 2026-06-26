@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Celebrating JJ | Extraordinary Elegance</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <title>JJ's Premium Birthday Extravaganza</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #0f0f11 0%, #1a1a24 100%);
+            --bg-gradient: linear-gradient(135deg, #060608 0%, #111119 100%);
             --gold: #d4af37;
             --gold-glow: rgba(212, 175, 55, 0.3);
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.07);
         }
 
         * {
@@ -23,12 +24,36 @@
         body {
             background: var(--bg-gradient);
             color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
+            font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
             perspective: 1000px;
         }
 
-        /* Hero Section with 3D Depth */
+        /* Floating Meme Target Layer */
+        #floating-container {
+            position: fixed;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+        }
+
+        .floating-target {
+            position: absolute;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.2s;
+            animation: floatUp 8s linear infinite;
+        }
+        .floating-target:hover {
+            transform: scale(1.2);
+        }
+
+        /* Hero Section */
         .hero {
             height: 100vh;
             display: flex;
@@ -37,106 +62,136 @@
             align-items: center;
             text-align: center;
             position: relative;
-            transform-style: preserve-3d;
         }
 
         .hero-title {
             font-family: 'Cinzel', serif;
-            font-size: 4rem;
-            letter-spacing: 6px;
+            font-size: 5rem;
             color: var(--gold);
             text-shadow: 0 0 30px var(--gold-glow);
-            margin-bottom: 10px;
-            transform: translateZ(50px);
-            animation: float 4s ease-in-out infinite;
+            cursor: pointer;
+            user-select: none;
+            transition: transform 0.3s;
+        }
+        .hero-title:hover {
+            transform: scale(1.05) rotate(-2deg);
         }
 
-        .hero-subtitle {
-            font-weight: 300;
-            letter-spacing: 4px;
+        .badge-premium {
+            background: linear-gradient(90deg, #d4af37, #f3e5ab);
+            color: #000;
+            padding: 5px 15px;
+            font-weight: bold;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            opacity: 0.8;
-            transform: translateZ(30px);
+            margin-top: 15px;
         }
 
-        /* Glassmorphic Container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 40px 20px;
         }
 
-        h2 {
-            font-family: 'Cinzel', serif;
-            text-align: center;
-            color: var(--gold);
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            letter-spacing: 3px;
-        }
-
-        /* 3D Interactive Grid */
-        .memory-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            margin-bottom: 80px;
-        }
-
-        .memory-card {
+        /* Luxury Carousel Layout */
+        .carousel-section {
             background: var(--glass);
             border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 20px;
-            backdrop-filter: blur(15px);
-            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.5s;
-            transform-style: preserve-3d;
-            cursor: pointer;
-        }
-
-        .memory-card:hover {
-            transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 20px var(--gold-glow);
-            border-color: var(--gold);
-        }
-
-        .memory-img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            background: #222; /* Placeholder styling */
-        }
-
-        /* Luxury Forms & Widgets */
-        .luxury-pane {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            backdrop-filter: blur(20px);
             border-radius: 24px;
-            padding: 40px;
-            margin-bottom: 5px;
+            padding: 30px;
+            backdrop-filter: blur(20px);
+            text-align: center;
+            margin-bottom: 60px;
         }
 
-        .split-layout {
+        .carousel-container {
+            position: relative;
+            max-width: 500px;
+            margin: 0 auto 20px auto;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+        }
+
+        .carousel-slide {
+            display: none;
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .carousel-slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .carousel-btn {
+            background: rgba(0,0,0,0.6);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 8px;
+            margin: 0 10px;
+            transition: all 0.3s;
+        }
+        .carousel-btn:hover {
+            background: var(--gold);
+            color: #000;
+        }
+
+        /* Grid Framework for Minigames and Utilities */
+        .grid-layout {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
         }
 
+        .interactive-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            backdrop-filter: blur(15px);
+            transition: all 0.3s;
+        }
+        .interactive-card:hover {
+            border-color: var(--gold);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+        }
+
+        h2, h3 {
+            font-family: 'Cinzel', serif;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        /* Fit Rater Game Styling */
+        .rater-score {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ffffff;
+            margin: 20px 0;
+            text-shadow: 0 0 10px var(--gold-glow);
+        }
+
+        /* Luxury Forms */
         input, textarea {
             width: 100%;
-            background: rgba(255,255,255,0.05);
+            background: rgba(255,255,255,0.04);
             border: 1px solid var(--glass-border);
             padding: 15px;
             border-radius: 8px;
             color: white;
             font-family: inherit;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             transition: all 0.3s;
         }
-
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--gold);
@@ -147,152 +202,241 @@
             background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold);
-            padding: 15px 30px;
+            padding: 15px;
             font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
             transition: all 0.3s;
-            border-radius: 4px;
+            border-radius: 8px;
             width: 100%;
+            letter-spacing: 1px;
         }
-
         .btn-gold:hover {
             background: var(--gold);
             color: #000;
             box-shadow: 0 0 20px var(--gold-glow);
         }
 
-        .mpesa-badge {
-            display: inline-block;
+        .mpesa-tag {
             background: #4B9445;
             color: white;
-            padding: 4px 12px;
+            padding: 3px 10px;
             border-radius: 4px;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
+            display: inline-block;
             margin-bottom: 10px;
         }
 
-        /* Wishes display section */
-        .wishes-box {
-            max-height: 300px;
+        .wishes-display {
+            max-height: 200px;
             overflow-y: auto;
-            margin-top: 20px;
-            padding-right: 10px;
+            margin-top: 15px;
+            text-align: left;
         }
-
-        .wish-item {
-            padding: 15px;
+        .wish-node {
+            padding: 10px 0;
             border-bottom: 1px solid var(--glass-border);
             font-size: 0.9rem;
         }
-        .wish-item strong { color: var(--gold); }
+        .wish-node span { color: var(--gold); }
 
-        @keyframes float {
-            0%, 100% { transform: translateZ(50px) translateY(0); }
-            50% { transform: translateZ(50px) translateY(-10px); }
+        @keyframes floatUp {
+            0% { transform: translateY(105vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
         }
-
-        @media (max-width: 768px) {
-            .split-layout { grid-template-columns: 1fr; }
-            .hero-title { font-size: 2.5rem; }
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
         }
     </style>
 </head>
 <body>
 
+    <div id="floating-container"></div>
+
+    <!-- Hero Area -->
     <section class="hero">
-        <h1 class="hero-title">JJ</h1>
-        <p class="hero-subtitle">The Celebration of a Legend</p>
+        <h1 class="hero-title" onclick="triggerMassiveConfetti()">JJ</h1>
+        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.8;">The Billionaire Birthday Checklist</p>
+        <span class="badge-premium">👑 Tap Title For Instant Chaos</span>
     </section>
 
     <main class="container">
-        
-        <h2>Chapters of Excellence</h2>
-        <div class="memory-grid">
-            <div class="memory-card" data-tilt>
-                <div class="memory-img" style="display:flex; align-items:center; justify-content:center; color:#555;">[ Photo Placeholder 1 ]</div>
-                <h3 style="color:var(--gold); font-family:'Cinzel'; margin-bottom:5px;">Vision & Grit</h3>
-                <p style="font-size:0.85rem; opacity:0.7;">Moments captured through a lifetime of building dreams.</p>
+
+        <!-- The Grand Exhibit Carousel -->
+        <section class="carousel-section">
+            <h2>The Photographic Archives</h2>
+            <p style="opacity:0.6; margin-bottom: 25px;">Documented proof that JJ is indeed a premium individual.</p>
+            
+            <div class="carousel-container">
+                <img src="1000187645.jpg" class="carousel-slide active" alt="JJ Archive">
+                <img src="1000174187.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="1000163303.heic" class="carousel-slide" alt="JJ Archive">
+                <img src="1000162372.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="1000156529.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.heif" class="carousel-slide" alt="JJ Archive">
+                <img src="1000139556.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="1000129325.jpg" class="carousel-slide" alt="JJ Archive">
+                <img src="1000114478.heic" class="carousel-slide" alt="JJ Archive">
             </div>
-            <div class="memory-card" data-tilt>
-                <div class="memory-img" style="display:flex; align-items:center; justify-content:center; color:#555;">[ Photo Placeholder 2 ]</div>
-                <h3 style="color:var(--gold); font-family:'Cinzel'; margin-bottom:5px;">Pure Legacy</h3>
-                <p style="font-size:0.85rem; opacity:0.7;">Celebrating the milestones that define an era.</p>
+
+            <div>
+                <button class="carousel-btn" onclick="changeSlide(-1)">◀ Prev</button>
+                <button class="carousel-btn" onclick="changeSlide(1)">Next ▶</button>
             </div>
+        </section>
+
+        <div class="grid-layout">
+            
+            <!-- Interactive Fit Rater Minigame -->
+            <div class="interactive-card" style="text-align: center;">
+                <h3>JJ Fit Evaluation Matrix</h3>
+                <p style="font-size:0.85rem; opacity:0.7;">An algorithmically complex meter assessing current luxury variables.</p>
+                <div class="rater-score" id="score-display">98.4%</div>
+                <button class="btn-gold" onclick="rateFit()">Generate New Rating</button>
+                <p id="rate-comment" style="font-size:0.85rem; margin-top:15px; color: #a5a5a5;">Status: Looking sharp like a true CEO.</p>
+            </div>
+
+            <!-- Interactive Compliment Generator -->
+            <div class="interactive-card" style="text-align: center;">
+                <h3>The Hype Generator</h3>
+                <p style="font-size:0.85rem; opacity:0.7;">Instantly construct premium, dynamic compliments for the boss.</p>
+                <div id="hype-box" style="margin: 30px 0; font-style: italic; color: var(--gold);">"JJ doesn't match the vibe, he dictates the macroeconomic trends."</div>
+                <button class="btn-gold" onclick="generateHype()">Hype Him Up</button>
+            </div>
+
         </div>
 
-        <div class="luxury-pane split-layout">
-            <div>
-                <span class="mpesa-badge">M-PESA EXPRESS</span>
-                <h3 style="font-family:'Cinzel'; font-size:1.8rem; margin-bottom:10px;">Send a Birthday Blessing</h3>
-                <p style="font-size:0.9rem; opacity:0.7; margin-bottom:25px;">Honour JJ's special day directly via M-Pesa secure checkout channel.</p>
+        <div class="grid-layout">
+            
+            <!-- Secure Luxury Gifting Panel -->
+            <div class="interactive-card">
+                <span class="mpesa-tag">M-PESA INSTANT PORTAL</span>
+                <h3>The Wealth Transfer Channel</h3>
+                <p style="font-size:0.85rem; opacity:0.7; margin-bottom:20px;">Fund JJ's lifestyle directly. High values heavily encouraged.</p>
                 
-                <form id="paymentForm">
-                    <input type="text" id="phone" placeholder="Phone Number (e.g., 2547XXXXXXXX)" required>
-                    <input type="number" id="amount" placeholder="Amount (KES)" required>
-                    <button type="submit" class="btn-gold">Initiate Gift Securely</button>
+                <form id="paymentSystem">
+                    <input type="text" id="phone" placeholder="M-Pesa Number (e.g. 2547XXXXXXXX)" required>
+                    <input type="number" id="amount" placeholder="Amount to Transfer (KES)" required>
+                    <button type="submit" class="btn-gold">Execute Gift Transaction</button>
                 </form>
             </div>
 
-            <div>
-                <h3 style="font-family:'Cinzel'; font-size:1.8rem; margin-bottom:10px;">Leave Your Tribute</h3>
-                <form id="wishForm">
-                    <input type="text" id="senderName" placeholder="Your Distinguished Name" required>
-                    <textarea id="message" rows="3" placeholder="Write your tribute here..." required></textarea>
-                    <button type="submit" class="btn-gold">Publish Wish</button>
+            <!-- Tributes & Interactive Message Hub -->
+            <div class="interactive-card">
+                <h3>The Global Tribute Wall</h3>
+                <p style="font-size:0.85rem; opacity:0.7; margin-bottom:20px;">Publish your warm sentiments directly to the ledger.</p>
+                
+                <form id="tributeSystem">
+                    <input type="text" id="author" placeholder="Your Official Name" required>
+                    <textarea id="note" rows="2" placeholder="Your words of profound wisdom..." required></textarea>
+                    <button type="submit" class="btn-gold">Publish Tribute</button>
                 </form>
 
-                <div class="wishes-box" id="wishesBox">
-                    </div>
+                <div class="wishes-display" id="board">
+                    <div class="wish-node"><span>Peter</span>: Absolute legend status achieved today! 🥂</div>
+                </div>
             </div>
+
         </div>
 
     </main>
 
+    <!-- Complete Interaction Engine -->
     <script>
-        // 3D Card Hover Interaction effect
-        const cards = document.querySelectorAll('.memory-card');
-        cards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - (rect.width/2);
-                const y = e.clientY - rect.top - (rect.height/2);
-                card.style.transform = `translateY(-10px) rotateX(${-y / 10}deg) rotateY(${x / 10}deg)`;
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) rotateX(0) rotateY(0)';
-            });
+        // Confetti Initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            spawnTargets();
         });
 
-        // Async API Handling for Gifting and Wishes
-        document.getElementById('wishForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = document.getElementById('senderName').value;
-            const text = document.getElementById('message').value;
+        function triggerMassiveConfetti() {
+            confetti({ particleCount: 100, spread: 60, colors: ['#d4af37', '#ffffff', '#222222'] });
+        }
 
-            // Appends directly to UI instantly for feedback
-            const container = document.getElementById('wishesBox');
-            container.innerHTML = `<div class="wish-item"><strong>${name}</strong>: "${text}"</div>` + container.innerHTML;
+        // Image Carousel Logic
+        let currentIdx = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        
+        function changeSlide(direction) {
+            slides[currentIdx].classList.remove('active');
+            currentIdx = (currentIdx + direction + slides.length) % slides.length;
+            slides[currentIdx].classList.add('active');
+        }
+
+        // Fun Fit Rater Logic
+        const descriptions = [
+            "Status: Looking sharp like a true CEO.",
+            "Warning: Level of clean exceeding localized legal safety limits.",
+            "Status: Sharp profile detected. Verified Trendsetter.",
+            "Error: Financial and visual aesthetic indicators are off the chart."
+        ];
+        function rateFit() {
+            triggerMassiveConfetti();
+            const randomScore = (Math.random() * (100 - 95) + 95).toFixed(2);
+            document.getElementById('score-display').innerText = randomScore + "%";
+            document.getElementById('rate-comment').innerText = descriptions[Math.floor(Math.random() * descriptions.length)];
+        }
+
+        // Compliment Board Engine
+        const hypes = [
+            "JJ doesn't match the vibe, he dictates the macroeconomic trends.",
+            "Legend says compilers complete code error-free simply if JJ glances at the screen.",
+            "The absolute GOAT. No further parameters necessary.",
+            "He walked into Burger King, put on that crown, and became the rightful monarch.",
+            "Classy, timeless, and completely immune to syntax bugs."
+        ];
+        function generateHype() {
+            const randomHype = hypes[Math.floor(Math.random() * hypes.length)];
+            document.getElementById('hype-box').innerText = `"${randomHype}"`;
+        }
+
+        // Handle Tributes Interface
+        document.getElementById('tributeSystem').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('author').value;
+            const text = document.getElementById('note').value;
             
-            // API Trigger configuration
-            /*
-            await fetch('/api/wishes', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ name, text })
-            });
-            */
+            const board = document.getElementById('board');
+            board.innerHTML = `<div class="wish-node"><span>${user}</span>: ${text}</div>` + board.innerHTML;
+            
+            confetti({ particleCount: 30, angle: 60, spread: 55, origin: { x: 0 } });
+            confetti({ particleCount: 30, angle: 120, spread: 55, origin: { x: 1 } });
             e.target.reset();
         });
 
-        document.getElementById('paymentForm').addEventListener('submit', async (e) => {
+        // Handle M-Pesa Interactive Submission
+        document.getElementById('paymentSystem').addEventListener('submit', (e) => {
             e.preventDefault();
-            alert("M-Pesa STK Push Initialized. Confirm on your handset.");
+            alert("🔒 Connecting to Safaricom Checkout Gateway... Keep your phone unlocked for the prompt.");
         });
+
+        // Floating Target Game Layer Engine
+        const assetPool = ['1000156529.jpg', '1000129325.jpg', '1000187645.jpg'];
+        function spawnTargets() {
+            const container = document.getElementById('floating-container');
+            setInterval(() => {
+                const bubble = document.createElement('img');
+                bubble.src = assetPool[Math.floor(Math.random() * assetPool.length)];
+                bubble.classList.add('floating-target');
+                bubble.style.left = Math.random() * 85 + 'vw';
+                bubble.style.animationDuration = (Math.random() * 4 + 5) + 's';
+                
+                bubble.addEventListener('click', () => {
+                    confetti({ particleCount: 20, position: {x: bubble.offsetLeft / window.innerWidth, y: bubble.offsetTop / window.innerHeight} });
+                    bubble.remove();
+                });
+                
+                container.appendChild(bubble);
+                setTimeout(() => bubble.remove(), 9000);
+            }, 3000);
+        }
     </script>
 </body>
 </html>
+
 
