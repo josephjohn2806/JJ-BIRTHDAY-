@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JJ's Frontend Birthday Edition</title>
+    <title>JJ's Frontend Birthday Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --cake-pink: #c19193; /* Primary theme color matched from 54433d717724e4907ddd435b5a9a223a.mp4 */
-            --bg-dark: #1e1415;
-            --card-bg: #2a1d1f;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-dark-overlay: rgba(30, 20, 21, 0.78); /* Dark tint to make text highly readable over sliding pictures */
+            --card-bg: rgba(42, 29, 31, 0.65); /* Elegant glassmorphism for containers */
+            --glass-border: rgba(255, 255, 255, 0.12);
             --text-light: #f5eae9;
         }
 
@@ -22,10 +22,47 @@
         }
 
         body {
-            background-color: var(--bg-dark);
+            background-color: #1e1415;
             color: var(--text-light);
             font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Full Screen Background Slideshow Framework */
+        .bg-slideshow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -2;
+            overflow: hidden;
+        }
+
+        .bg-slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out; /* Smooth crossfade timing */
+        }
+
+        .bg-slide.active {
+            opacity: 1;
+        }
+
+        /* Dark Vignette Overlay Layer */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(30, 20, 21, 0.4) 0%, var(--bg-dark-overlay) 100%);
+            backdrop-filter: blur(3px); /* Subtle premium focus blur */
+            z-index: -1;
         }
 
         /* Floating Meme Target Layer */
@@ -51,19 +88,19 @@
 
         /* Hero Section */
         .hero {
-            height: 60vh;
+            height: 55vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            background: linear-gradient(180deg, rgba(193, 145, 147, 0.15) 0%, rgba(30, 20, 21, 0) 100%);
+            position: relative;
         }
 
         .hero-title {
             font-size: 6rem;
             color: var(--cake-pink);
-            text-shadow: 0 0 20px rgba(193, 145, 147, 0.4);
+            text-shadow: 0 4px 20px rgba(193, 145, 147, 0.6);
             cursor: pointer;
             user-select: none;
             font-weight: 700;
@@ -71,7 +108,7 @@
 
         .badge-premium {
             background: var(--cake-pink);
-            color: var(--bg-dark);
+            color: #1e1415;
             padding: 6px 18px;
             font-weight: bold;
             border-radius: 50px;
@@ -80,13 +117,14 @@
             text-transform: uppercase;
             margin-top: 15px;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(193, 145, 147, 0.3);
+            box-shadow: 0 4px 15px rgba(193, 145, 147, 0.4);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 0 20px 40px 20px;
+            padding: 0 20px 60px 20px;
+            position: relative;
         }
 
         /* Animated Video Cake Module */
@@ -95,19 +133,18 @@
             border-radius: 24px;
             padding: 40px;
             text-align: center;
-            margin: -60px auto 60px auto;
-            max-width: 500px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            margin: -40px auto 60px auto;
+            max-width: 450px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            position: relative;
             z-index: 10;
         }
 
         .cake-svg {
-            width: 180px;
+            width: 160px;
             height: auto;
         }
 
@@ -139,56 +176,12 @@
             animation: fadeInElement 1.2s ease-out 1.2s forwards;
         }
 
-        /* New Premium Image Grid Layout */
-        .gallery-section {
-            margin-bottom: 60px;
-        }
-
-        .gallery-section h2 {
-            font-size: 2rem;
-            color: var(--cake-pink);
-            margin-bottom: 25px;
-            text-align: center;
-        }
-
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 20px;
-        }
-
-        .grid-item {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            height: 280px;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
-        }
-
-        .grid-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s;
-        }
-
-        .grid-item:hover {
-            transform: translateY(-8px);
-            border-color: var(--cake-pink);
-        }
-
-        .grid-item:hover img {
-            transform: scale(1.05);
-        }
-
-        /* Grid Framework for Minigames and Utilities */
+        /* Grid Framework for Cards */
         .grid-layout {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 30px;
-            margin-bottom: 60px;
+            margin-bottom: 30px;
         }
 
         .interactive-card {
@@ -196,16 +189,19 @@
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 35px;
-            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
         }
         .interactive-card:hover {
             border-color: var(--cake-pink);
-            box-shadow: 0 10px 30px rgba(193, 145, 147, 0.1);
+            transform: translateY(-4px);
         }
 
         h3 {
             color: var(--cake-pink);
             margin-bottom: 20px;
+            font-size: 1.4rem;
         }
 
         .rater-score {
@@ -213,12 +209,12 @@
             font-weight: bold;
             color: #ffffff;
             margin: 20px 0;
-            text-shadow: 0 0 10px rgba(193, 145, 147, 0.3);
+            text-shadow: 0 0 10px rgba(193, 145, 147, 0.4);
         }
 
         input, textarea {
             width: 100%;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.06);
             border: 1px solid var(--glass-border);
             padding: 15px;
             border-radius: 8px;
@@ -230,7 +226,7 @@
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--cake-pink);
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.12);
         }
 
         .btn-theme {
@@ -248,8 +244,8 @@
         }
         .btn-theme:hover {
             background: var(--cake-pink);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(193, 145, 147, 0.3);
+            color: #1e1415;
+            box-shadow: 0 0 20px rgba(193, 145, 147, 0.4);
         }
 
         .mpesa-tag {
@@ -301,12 +297,27 @@
 </head>
 <body>
 
+    <!-- Fullscreen Dynamic Background Engine -->
+    <div class="bg-slideshow">
+        <img src="1000187645.jpg" class="bg-slide active" alt="Slide">
+        <img src="1000174187.jpg" class="bg-slide" alt="Slide">
+        <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" class="bg-slide" alt="Slide">
+        <img src="1000163303.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+        <img src="1000162372.jpg" class="bg-slide" alt="Slide">
+        <img src="1000156529.jpg" class="bg-slide" alt="Slide">
+        <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+        <img src="1000139556.jpg" class="bg-slide" alt="Slide">
+        <img src="1000129325.jpg" class="bg-slide" alt="Slide">
+        <img src="1000114478.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+    </div>
+    <div class="bg-overlay"></div>
+
     <div id="floating-container"></div>
 
     <!-- Hero Area -->
     <section class="hero">
         <h1 class="hero-title" onclick="triggerMassiveConfetti()">JJ</h1>
-        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.8;">The Frontend Birthday Dashboard</p>
+        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.9;">The Frontend Birthday Dashboard</p>
         <span class="badge-premium" onclick="triggerMassiveConfetti()">⚡ Trigger Compilation Confetti</span>
     </section>
 
@@ -330,38 +341,21 @@
             <div class="cake-text">happy birthday JJ!</div>
         </section>
 
-        <!-- Redesigned High-Performance Image Grid Layout -->
-        <section class="gallery-section">
-            <h2>The Photographic Archives</h2>
-            <div class="image-grid">
-                <div class="grid-item"><img src="1000187645.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000174187.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000163303.heic" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000162372.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000156529.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.heif" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000139556.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000129325.jpg" alt="JJ Archive"></div>
-                <div class="grid-item"><img src="1000114478.heic" alt="JJ Archive"></div>
-            </div>
-        </section>
-
         <div class="grid-layout">
             
             <!-- Interactive Fit Rater Minigame -->
             <div class="interactive-card" style="text-align: center;">
                 <h3>Fit Evaluation Matrix</h3>
-                <p style="font-size:0.85rem; opacity:0.7;">An algorithmically complex meter assessing current luxury variables.</p>
-                <div class="rater-score" id="score-display">99.1%</div>
+                <p style="font-size:0.85rem; opacity:0.8;">An algorithmically complex meter assessing current luxury variables.</p>
+                <div class="rater-score" id="score-display">99.4%</div>
                 <button class="btn-theme" onclick="rateFit()">Generate New Rating</button>
-                <p id="rate-comment" style="font-size:0.85rem; margin-top:15px; color: #a5a5a5;">Status: Looking sharp like a true CEO.</p>
+                <p id="rate-comment" style="font-size:0.85rem; margin-top:15px; color: #dcd0cf;">Status: Looking sharp like a true CEO.</p>
             </div>
 
             <!-- Interactive Compliment Generator -->
             <div class="interactive-card" style="text-align: center;">
                 <h3>The Hype Generator</h3>
-                <p style="font-size:0.85rem; opacity:0.7;">Instantly construct premium, dynamic compliments for the boss.</p>
+                <p style="font-size:0.85rem; opacity:0.8;">Instantly construct premium, dynamic compliments for the boss.</p>
                 <div id="hype-box" style="margin: 30px 0; font-style: italic; color: var(--cake-pink);">"JJ doesn't match the vibe, he dictates the macroeconomic trends."</div>
                 <button class="btn-theme" onclick="generateHype()">Hype Him Up</button>
             </div>
@@ -374,7 +368,7 @@
             <div class="interactive-card">
                 <span class="mpesa-tag">M-PESA INSTANT PORTAL</span>
                 <h3>The Wealth Transfer Channel</h3>
-                <p style="font-size:0.85rem; opacity:0.7; margin-bottom:20px;">Fund JJ's lifestyle directly. High values heavily encouraged.</p>
+                <p style="font-size:0.85rem; opacity:0.8; margin-bottom:20px;">Fund JJ's lifestyle directly. High values heavily encouraged.</p>
                 
                 <form id="paymentSystem">
                     <input type="text" id="phone" placeholder="M-Pesa Number (e.g. 2547XXXXXXXX)" required>
@@ -386,7 +380,7 @@
             <!-- Tributes Message Hub -->
             <div class="interactive-card">
                 <h3>The Global Tribute Wall</h3>
-                <p style="font-size:0.85rem; opacity:0.7; margin-bottom:20px;">Publish your warm sentiments directly to the ledger.</p>
+                <p style="font-size:0.85rem; opacity:0.8; margin-bottom:20px;">Publish your warm sentiments directly to the ledger.</p>
                 
                 <form id="tributeSystem">
                     <input type="text" id="author" placeholder="Your Official Name" required>
@@ -404,10 +398,23 @@
     </main>
 
     <script>
+        // Background Slider Logic
+        let slideIndex = 0;
+        const slides = document.querySelectorAll('.bg-slide');
+        
+        function startBackgroundSlideshow() {
+            setInterval(() => {
+                slides[slideIndex].classList.remove('active');
+                slideIndex = (slideIndex + 1) % slides.length;
+                slides[slideIndex].classList.add('active');
+            }, 4000); // Transitions background slide every 4 seconds
+        }
+
         // Confetti Initialization
         window.addEventListener('DOMContentLoaded', () => {
             confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
             spawnTargets();
+            startBackgroundSlideshow();
         });
 
         function triggerMassiveConfetti() {
@@ -484,6 +491,7 @@
     </script>
 </body>
 </html>
+
 
 
 
