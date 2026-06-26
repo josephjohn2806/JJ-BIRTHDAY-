@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JJ's Premium Birthday Extravaganza</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <title>JJ's Frontend Birthday Edition</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --bg-gradient: linear-gradient(135deg, #060608 0%, #111119 100%);
-            --gold: #d4af37;
-            --gold-glow: rgba(212, 175, 55, 0.3);
-            --glass: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.07);
-            --cake-pink: #c19193; /* Matched precisely from the video */
+            --cake-pink: #c19193; /* Primary theme color matched from 54433d717724e4907ddd435b5a9a223a.mp4 */
+            --bg-dark: #1e1415;
+            --card-bg: #2a1d1f;
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #f5eae9;
         }
 
         * {
@@ -23,12 +22,10 @@
         }
 
         body {
-            background: var(--bg-gradient);
-            color: #ffffff;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
             font-family: 'Space Grotesk', sans-serif;
             overflow-x: hidden;
-            perspective: 1000px;
-            transition: background 0.5s ease;
         }
 
         /* Floating Meme Target Layer */
@@ -45,44 +42,37 @@
             width: 75px;
             height: 75px;
             border-radius: 50%;
-            border: 2px solid var(--gold);
+            border: 2px solid var(--cake-pink);
             cursor: pointer;
             pointer-events: auto;
             transition: transform 0.2s;
             animation: floatUp 8s linear infinite;
         }
-        .floating-target:hover {
-            transform: scale(1.2);
-        }
 
         /* Hero Section */
         .hero {
-            height: 100vh;
+            height: 60vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-            position: relative;
+            background: linear-gradient(180deg, rgba(193, 145, 147, 0.15) 0%, rgba(30, 20, 21, 0) 100%);
         }
 
         .hero-title {
-            font-family: 'Cinzel', serif;
-            font-size: 5rem;
-            color: var(--gold);
-            text-shadow: 0 0 30px var(--gold-glow);
+            font-size: 6rem;
+            color: var(--cake-pink);
+            text-shadow: 0 0 20px rgba(193, 145, 147, 0.4);
             cursor: pointer;
             user-select: none;
-            transition: transform 0.3s;
-        }
-        .hero-title:hover {
-            transform: scale(1.05) rotate(-2deg);
+            font-weight: 700;
         }
 
         .badge-premium {
-            background: linear-gradient(90deg, #d4af37, #f3e5ab);
-            color: #000;
-            padding: 5px 15px;
+            background: var(--cake-pink);
+            color: var(--bg-dark);
+            padding: 6px 18px;
             font-weight: bold;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -90,30 +80,37 @@
             text-transform: uppercase;
             margin-top: 15px;
             cursor: pointer;
+            box-shadow: 0 4px 15px rgba(193, 145, 147, 0.3);
         }
 
-        /* Video Cake Showcase Mode Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px 40px 20px;
+        }
+
+        /* Animated Video Cake Module */
         .cake-showcase-container {
             background: var(--cake-pink);
             border-radius: 24px;
             padding: 40px;
             text-align: center;
-            margin: 40px auto;
-            max-width: 600px;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            margin: -60px auto 60px auto;
+            max-width: 500px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 4px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 10;
         }
 
         .cake-svg {
-            width: 220px;
+            width: 180px;
             height: auto;
         }
 
-        /* Drawing & rising animations mimicking the video */
         .cake-layer {
             animation: riseUp 1.8s ease-out forwards;
             transform-origin: bottom center;
@@ -133,9 +130,8 @@
         }
 
         .cake-text {
-            font-family: 'Space Grotesk', sans-serif;
             color: #3d2b2c;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: bold;
             margin-top: 20px;
             letter-spacing: 1px;
@@ -143,59 +139,48 @@
             animation: fadeInElement 1.2s ease-out 1.2s forwards;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-
-        /* Luxury Carousel Layout */
-        .carousel-section {
-            background: var(--glass);
-            border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 30px;
-            backdrop-filter: blur(20px);
-            text-align: center;
+        /* New Premium Image Grid Layout */
+        .gallery-section {
             margin-bottom: 60px;
         }
 
-        .carousel-container {
+        .gallery-section h2 {
+            font-size: 2rem;
+            color: var(--cake-pink);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .grid-item {
             position: relative;
-            max-width: 500px;
-            margin: 0 auto 20px auto;
             border-radius: 16px;
             overflow: hidden;
+            height: 280px;
             border: 1px solid var(--glass-border);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s;
         }
 
-        .carousel-slide {
-            display: none;
+        .grid-item img {
             width: 100%;
-            height: 500px;
+            height: 100%;
             object-fit: cover;
+            transition: transform 0.4s;
         }
 
-        .carousel-slide.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
+        .grid-item:hover {
+            transform: translateY(-8px);
+            border-color: var(--cake-pink);
         }
 
-        .carousel-btn {
-            background: rgba(0,0,0,0.6);
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 8px;
-            margin: 0 10px;
-            transition: all 0.3s;
-        }
-        .carousel-btn:hover {
-            background: var(--gold);
-            color: #000;
+        .grid-item:hover img {
+            transform: scale(1.05);
         }
 
         /* Grid Framework for Minigames and Utilities */
@@ -207,34 +192,30 @@
         }
 
         .interactive-card {
-            background: var(--glass);
+            background: var(--card-bg);
             border: 1px solid var(--glass-border);
             border-radius: 24px;
             padding: 35px;
-            backdrop-filter: blur(15px);
             transition: all 0.3s;
         }
         .interactive-card:hover {
-            border-color: var(--gold);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            border-color: var(--cake-pink);
+            box-shadow: 0 10px 30px rgba(193, 145, 147, 0.1);
         }
 
-        h2, h3 {
-            font-family: 'Cinzel', serif;
-            color: var(--gold);
+        h3 {
+            color: var(--cake-pink);
             margin-bottom: 20px;
         }
 
-        /* Fit Rater Game Styling */
         .rater-score {
             font-size: 2.5rem;
             font-weight: bold;
             color: #ffffff;
             margin: 20px 0;
-            text-shadow: 0 0 10px var(--gold-glow);
+            text-shadow: 0 0 10px rgba(193, 145, 147, 0.3);
         }
 
-        /* Luxury Forms */
         input, textarea {
             width: 100%;
             background: rgba(255,255,255,0.04);
@@ -248,16 +229,15 @@
         }
         input:focus, textarea:focus {
             outline: none;
-            border-color: var(--gold);
+            border-color: var(--cake-pink);
             background: rgba(255,255,255,0.08);
         }
 
-        .btn-gold {
+        .btn-theme {
             background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
+            border: 1px solid var(--cake-pink);
+            color: var(--cake-pink);
             padding: 15px;
-            font-family: 'Cinzel', serif;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
@@ -266,10 +246,10 @@
             width: 100%;
             letter-spacing: 1px;
         }
-        .btn-gold:hover {
-            background: var(--gold);
-            color: #000;
-            box-shadow: 0 0 20px var(--gold-glow);
+        .btn-theme:hover {
+            background: var(--cake-pink);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px rgba(193, 145, 147, 0.3);
         }
 
         .mpesa-tag {
@@ -294,7 +274,7 @@
             border-bottom: 1px solid var(--glass-border);
             font-size: 0.9rem;
         }
-        .wish-node span { color: var(--gold); }
+        .wish-node span { color: var(--cake-pink); }
 
         /* Animation Keyframes */
         @keyframes floatUp {
@@ -302,9 +282,6 @@
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% { transform: translateY(-15vh) rotate(360deg); opacity: 0; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
         }
         @keyframes riseUp {
             0% { transform: scaleY(0); opacity: 0; }
@@ -329,60 +306,44 @@
     <!-- Hero Area -->
     <section class="hero">
         <h1 class="hero-title" onclick="triggerMassiveConfetti()">JJ</h1>
-        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.8;">The Billionaire Birthday Checklist</p>
-        <span class="badge-premium" onclick="triggerMassiveConfetti()">👑 Tap For Instant Chaos</span>
+        <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.8;">The Frontend Birthday Dashboard</p>
+        <span class="badge-premium" onclick="triggerMassiveConfetti()">⚡ Trigger Compilation Confetti</span>
     </section>
 
     <main class="container">
 
-        <!-- Animated Frontend Dev Cake Module -->
+        <!-- Cake Module from 54433d717724e4907ddd435b5a9a223a.mp4 -->
         <section class="cake-showcase-container">
             <svg class="cake-svg" viewBox="0 0 200 160">
-                <!-- Base Tray -->
                 <rect x="20" y="130" width="160" height="8" rx="4" fill="#503e3f" />
-                
-                <!-- Cake Layers -->
                 <g class="cake-layer">
                     <rect x="35" y="90" width="130" height="40" fill="#423334" />
                     <rect x="35" y="60" width="130" height="30" fill="#5a4547" />
                 </g>
-
-                <!-- Cream Frosting Overlay Drip -->
                 <path class="cream-drip" d="M35,60 Q45,70 55,60 T75,60 T95,60 T115,60 T135,60 T155,60 T165,60 L165,52 Q165,48 155,48 L45,48 Q35,48 35,52 Z" fill="#e3d5d6" stroke="#e3d5d6" stroke-width="2"/>
-
-                <!-- Candles -->
                 <g class="candle">
                     <rect x="96" y="20" width="8" height="28" fill="#ffffff" />
-                    <path d="M96,20 L104,20 L104,28 L96,28 Z" fill="#d4af37" opacity="0.4"/>
+                    <path d="M96,20 L104,20 L104,28 L96,28 Z" fill="#c19193" opacity="0.4"/>
                 </g>
-
-                <!-- Flame -->
                 <path class="flame" d="M100,2 Q104,10 100,18 Q96,10 100,2 Z" fill="#ffbc42" />
             </svg>
             <div class="cake-text">happy birthday JJ!</div>
         </section>
 
-        <!-- The Grand Exhibit Carousel -->
-        <section class="carousel-section">
+        <!-- Redesigned High-Performance Image Grid Layout -->
+        <section class="gallery-section">
             <h2>The Photographic Archives</h2>
-            <p style="opacity:0.6; margin-bottom: 25px;">Documented proof that JJ is indeed a premium individual.</p>
-            
-            <div class="carousel-container">
-                <img src="1000187645.jpg" class="carousel-slide active" alt="JJ Archive">
-                <img src="1000174187.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="1000163303.heic" class="carousel-slide" alt="JJ Archive">
-                <img src="1000162372.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="1000156529.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.heif" class="carousel-slide" alt="JJ Archive">
-                <img src="1000139556.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="1000129325.jpg" class="carousel-slide" alt="JJ Archive">
-                <img src="1000114478.heic" class="carousel-slide" alt="JJ Archive">
-            </div>
-
-            <div>
-                <button class="carousel-btn" onclick="changeSlide(-1)">◀ Prev</button>
-                <button class="carousel-btn" onclick="changeSlide(1)">Next ▶</button>
+            <div class="image-grid">
+                <div class="grid-item"><img src="1000187645.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000174187.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000163303.heic" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000162372.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000156529.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.heif" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000139556.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000129325.jpg" alt="JJ Archive"></div>
+                <div class="grid-item"><img src="1000114478.heic" alt="JJ Archive"></div>
             </div>
         </section>
 
@@ -390,10 +351,10 @@
             
             <!-- Interactive Fit Rater Minigame -->
             <div class="interactive-card" style="text-align: center;">
-                <h3>JJ Fit Evaluation Matrix</h3>
+                <h3>Fit Evaluation Matrix</h3>
                 <p style="font-size:0.85rem; opacity:0.7;">An algorithmically complex meter assessing current luxury variables.</p>
-                <div class="rater-score" id="score-display">98.4%</div>
-                <button class="btn-gold" onclick="rateFit()">Generate New Rating</button>
+                <div class="rater-score" id="score-display">99.1%</div>
+                <button class="btn-theme" onclick="rateFit()">Generate New Rating</button>
                 <p id="rate-comment" style="font-size:0.85rem; margin-top:15px; color: #a5a5a5;">Status: Looking sharp like a true CEO.</p>
             </div>
 
@@ -401,15 +362,15 @@
             <div class="interactive-card" style="text-align: center;">
                 <h3>The Hype Generator</h3>
                 <p style="font-size:0.85rem; opacity:0.7;">Instantly construct premium, dynamic compliments for the boss.</p>
-                <div id="hype-box" style="margin: 30px 0; font-style: italic; color: var(--gold);">"JJ doesn't match the vibe, he dictates the macroeconomic trends."</div>
-                <button class="btn-gold" onclick="generateHype()">Hype Him Up</button>
+                <div id="hype-box" style="margin: 30px 0; font-style: italic; color: var(--cake-pink);">"JJ doesn't match the vibe, he dictates the macroeconomic trends."</div>
+                <button class="btn-theme" onclick="generateHype()">Hype Him Up</button>
             </div>
 
         </div>
 
         <div class="grid-layout">
             
-            <!-- Secure Luxury Gifting Panel -->
+            <!-- Secure Gifting Panel -->
             <div class="interactive-card">
                 <span class="mpesa-tag">M-PESA INSTANT PORTAL</span>
                 <h3>The Wealth Transfer Channel</h3>
@@ -418,11 +379,11 @@
                 <form id="paymentSystem">
                     <input type="text" id="phone" placeholder="M-Pesa Number (e.g. 2547XXXXXXXX)" required>
                     <input type="number" id="amount" placeholder="Amount to Transfer (KES)" required>
-                    <button type="submit" class="btn-gold">Execute Gift Transaction</button>
+                    <button type="submit" class="btn-theme">Execute Gift Transaction</button>
                 </form>
             </div>
 
-            <!-- Tributes & Interactive Message Hub -->
+            <!-- Tributes Message Hub -->
             <div class="interactive-card">
                 <h3>The Global Tribute Wall</h3>
                 <p style="font-size:0.85rem; opacity:0.7; margin-bottom:20px;">Publish your warm sentiments directly to the ledger.</p>
@@ -430,7 +391,7 @@
                 <form id="tributeSystem">
                     <input type="text" id="author" placeholder="Your Official Name" required>
                     <textarea id="note" rows="2" placeholder="Your words of profound wisdom..." required></textarea>
-                    <button type="submit" class="btn-gold">Publish Tribute</button>
+                    <button type="submit" class="btn-theme">Publish Tribute</button>
                 </form>
 
                 <div class="wishes-display" id="board">
@@ -442,7 +403,6 @@
 
     </main>
 
-    <!-- Complete Interaction Engine -->
     <script>
         // Confetti Initialization
         window.addEventListener('DOMContentLoaded', () => {
@@ -451,17 +411,7 @@
         });
 
         function triggerMassiveConfetti() {
-            confetti({ particleCount: 100, spread: 60, colors: ['#d4af37', '#ffffff', '#222222', '#c19193'] });
-        }
-
-        // Image Carousel Logic
-        let currentIdx = 0;
-        const slides = document.querySelectorAll('.carousel-slide');
-        
-        function changeSlide(direction) {
-            slides[currentIdx].classList.remove('active');
-            currentIdx = (currentIdx + direction + slides.length) % slides.length;
-            slides[currentIdx].classList.add('active');
+            confetti({ particleCount: 100, spread: 60, colors: ['#c19193', '#ffffff', '#2a1d1f'] });
         }
 
         // Fun Fit Rater Logic
@@ -534,6 +484,7 @@
     </script>
 </body>
 </html>
+
 
 
 
