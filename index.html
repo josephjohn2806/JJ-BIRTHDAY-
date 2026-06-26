@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
-            --cake-pink: #c19193; /* Primary theme color matched from 54433d717724e4907ddd435b5a9a223a.mp4 */
+            --cake-pink: #c19193; /* Primary theme color matched from your video */
             --bg-dark-overlay: rgba(30, 20, 21, 0.78); /* Dark tint to make text highly readable over sliding pictures */
             --card-bg: rgba(42, 29, 31, 0.65); /* Elegant glassmorphism for containers */
             --glass-border: rgba(255, 255, 255, 0.12);
@@ -65,7 +65,7 @@
             z-index: -1;
         }
 
-        /* Floating Meme Target Layer */
+        /* Floating Target Layer */
         #floating-container {
             position: fixed;
             width: 100vw;
@@ -248,17 +248,6 @@
             box-shadow: 0 0 20px rgba(193, 145, 147, 0.4);
         }
 
-        .mpesa-tag {
-            background: #4B9445;
-            color: white;
-            padding: 3px 10px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 10px;
-        }
-
         .wishes-display {
             max-height: 200px;
             overflow-y: auto;
@@ -297,24 +286,22 @@
 </head>
 <body>
 
-    <!-- Fullscreen Dynamic Background Engine -->
-    <div class="bg-slideshow">
+    <div class="bg-slideshow" id="slideshow-container">
         <img src="1000187645.jpg" class="bg-slide active" alt="Slide">
         <img src="1000174187.jpg" class="bg-slide" alt="Slide">
         <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_33848.jpg" class="bg-slide" alt="Slide">
-        <img src="1000163303.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+        <img src="1000163303.jpg" class="bg-slide" alt="Slide">
         <img src="1000162372.jpg" class="bg-slide" alt="Slide">
         <img src="1000156529.jpg" class="bg-slide" alt="Slide">
-        <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+        <img src="e2548e56-fce3-44b3-bd64-b607e2d33810-1_all_32242.jpg" class="bg-slide" alt="Slide">
         <img src="1000139556.jpg" class="bg-slide" alt="Slide">
         <img src="1000129325.jpg" class="bg-slide" alt="Slide">
-        <img src="1000114478.jpg" class="bg-slide" alt="Slide"> <!-- Converted configuration -->
+        <img src="1000114478.jpg" class="bg-slide" alt="Slide">
     </div>
     <div class="bg-overlay"></div>
 
     <div id="floating-container"></div>
 
-    <!-- Hero Area -->
     <section class="hero">
         <h1 class="hero-title" onclick="triggerMassiveConfetti()">JJ</h1>
         <p style="letter-spacing: 4px; text-transform: uppercase; opacity: 0.9;">The Frontend Birthday Dashboard</p>
@@ -323,7 +310,6 @@
 
     <main class="container">
 
-        <!-- Cake Module from 54433d717724e4907ddd435b5a9a223a.mp4 -->
         <section class="cake-showcase-container">
             <svg class="cake-svg" viewBox="0 0 200 160">
                 <rect x="20" y="130" width="160" height="8" rx="4" fill="#503e3f" />
@@ -343,7 +329,6 @@
 
         <div class="grid-layout">
             
-            <!-- Interactive Fit Rater Minigame -->
             <div class="interactive-card" style="text-align: center;">
                 <h3>Fit Evaluation Matrix</h3>
                 <p style="font-size:0.85rem; opacity:0.8;">An algorithmically complex meter assessing current luxury variables.</p>
@@ -352,7 +337,6 @@
                 <p id="rate-comment" style="font-size:0.85rem; margin-top:15px; color: #dcd0cf;">Status: Looking sharp like a true CEO.</p>
             </div>
 
-            <!-- Interactive Compliment Generator -->
             <div class="interactive-card" style="text-align: center;">
                 <h3>The Hype Generator</h3>
                 <p style="font-size:0.85rem; opacity:0.8;">Instantly construct premium, dynamic compliments for the boss.</p>
@@ -364,20 +348,16 @@
 
         <div class="grid-layout">
             
-            <!-- Secure Gifting Panel -->
             <div class="interactive-card">
-                <span class="mpesa-tag">M-PESA INSTANT PORTAL</span>
-                <h3>The Wealth Transfer Channel</h3>
-                <p style="font-size:0.85rem; opacity:0.8; margin-bottom:20px;">Fund JJ's lifestyle directly. High values heavily encouraged.</p>
+                <h3>Dynamic Photo Injector</h3>
+                <p style="font-size:0.85rem; opacity:0.8; margin-bottom:20px;">Inject a local filename or an image URL directly into the active background matrix.</p>
                 
-                <form id="paymentSystem">
-                    <input type="text" id="phone" placeholder="M-Pesa Number (e.g. 2547XXXXXXXX)" required>
-                    <input type="number" id="amount" placeholder="Amount to Transfer (KES)" required>
-                    <button type="submit" class="btn-theme">Execute Gift Transaction</button>
+                <form id="photoAdderSystem">
+                    <input type="text" id="imgSource" placeholder="Image Path or Link (e.g. new-fit.jpg)" required>
+                    <button type="submit" class="btn-theme">Inject to Slideshow</button>
                 </form>
             </div>
 
-            <!-- Tributes Message Hub -->
             <div class="interactive-card">
                 <h3>The Global Tribute Wall</h3>
                 <p style="font-size:0.85rem; opacity:0.8; margin-bottom:20px;">Publish your warm sentiments directly to the ledger.</p>
@@ -400,15 +380,40 @@
     <script>
         // Background Slider Logic
         let slideIndex = 0;
-        const slides = document.querySelectorAll('.bg-slide');
+        let slides = document.querySelectorAll('.bg-slide');
+        let slideshowInterval;
         
         function startBackgroundSlideshow() {
-            setInterval(() => {
+            clearInterval(slideshowInterval);
+            slideshowInterval = setInterval(() => {
+                if(slides.length === 0) return;
                 slides[slideIndex].classList.remove('active');
                 slideIndex = (slideIndex + 1) % slides.length;
                 slides[slideIndex].classList.add('active');
-            }, 4000); // Transitions background slide every 4 seconds
+            }, 4000); 
         }
+
+        // Photo Injection Handler
+        document.getElementById('photoAdderSystem').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const source = document.getElementById('imgSource').value.trim();
+            if(!source) return;
+
+            const container = document.getElementById('slideshow-container');
+            const newImg = document.createElement('img');
+            newImg.src = source;
+            newImg.classList.add('bg-slide');
+            newImg.alt = "Injected Slide";
+            
+            container.appendChild(newImg);
+            
+            // Refresh slide selection list
+            slides = document.querySelectorAll('.bg-slide');
+            
+            triggerMassiveConfetti();
+            alert("✨ Image path successfully integrated into rotation matrix!");
+            e.target.reset();
+        });
 
         // Confetti Initialization
         window.addEventListener('DOMContentLoaded', () => {
@@ -462,12 +467,6 @@
             e.target.reset();
         });
 
-        // Handle M-Pesa Interactive Submission
-        document.getElementById('paymentSystem').addEventListener('submit', (e) => {
-            e.preventDefault();
-            alert("🔒 Connecting to Safaricom Checkout Gateway... Keep your phone unlocked for the prompt.");
-        });
-
         // Floating Target Game Layer Engine
         const assetPool = ['1000156529.jpg', '1000129325.jpg', '1000187645.jpg'];
         function spawnTargets() {
@@ -491,6 +490,7 @@
     </script>
 </body>
 </html>
+
 
 
 
